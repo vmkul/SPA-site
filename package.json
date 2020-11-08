@@ -1,0 +1,32 @@
+{
+  "name": "spa-site",
+  "version": "1.0.0",
+  "description": "Client dev 4th lab",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . && prettier -c \"**/*.js\"",
+    "test": "npm run -s lint",
+    "build": "sass styles/style.sass styles/sass.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmkul/SPA-site.git"
+  },
+  "author": "vmkul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vmkul/SPA-site/issues"
+  },
+  "homepage": "https://github.com/vmkul/SPA-site#readme",
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-metarhia": "^7.0.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
+  },
+  "dependencies": {
+    "sass": "^1.29.0"
+  }
+}
