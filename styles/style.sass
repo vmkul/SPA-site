@@ -1,2 +1,152 @@
-h1
-  color: red
+html, body
+  margin: 0
+  padding: 0
+  border: 0
+  outline: 0
+  font-size: 100%
+  box-sizing: border-box
+  line-height: 1.42857143
+  min-width: 300px
+
+a
+  color: inherit
+
+header
+  position: sticky
+  top: -1px
+
+.top
+  display: flex
+  align-items: center
+  background: transparent
+
+.logo
+  max-width: 265px
+  text-align: left !important
+  img
+    width: 100%
+
+.telephones
+  flex: 1
+  text-align: right
+  margin-right: 15px
+  min-width: 100px
+
+.phone
+  font-size: 17px
+  padding: 4px 0
+  i
+    padding-right: 14px
+    font: normal normal normal 14px/1 FontAwesome
+    font-size: inherit
+    text-rendering: auto
+    color: #f57f37
+    display: none
+
+.additional-links, .links
+  display: none
+
+.block-timetable
+  display: none
+
+.links
+  flex: 3
+  margin-right: 20px
+  text-align: right
+  ul
+    margin: auto
+    display: inline-flex
+    list-style: none
+    li
+      float: left
+      margin-left: 10px
+      font-size: 13px
+      text-transform: uppercase
+      font-weight: normal
+      margin-bottom: 7px
+      position: relative
+
+.additional-links
+  flex: 1
+  width: 220px
+  max-width: 220px
+  height: inherit
+  font-size: 26px
+  justify-content: center
+  color: #999
+
+  a
+    color: inherit
+  div
+    margin-left: 20px
+    margin-right: 20px
+  div:hover
+    color: #f57f37
+
+.block-timetable
+  display: none
+
+@media (min-width: 1000px)
+  .logo
+    padding: 10px 17px
+
+  .links
+    display: block
+
+  .additional-links
+    display: flex
+
+  .telephones
+    min-width: 200px
+
+  .phone i
+    display: inline-block
+
+.block-phone
+  display: inline-block
+
+@media (min-width: 1150px)
+  .logo
+    max-width: 400px
+
+  .block-timetable
+    display: block
+
+  .phone
+    font-size: 20px
+
+@media (max-width: 400px)
+  .telephones
+    font-size: 70%
+
+  .logo
+    max-width: 150px
+
+nav
+  background: #29100d
+  color: white
+  font-size: 20px
+  position: sticky
+  display: flex
+  top: 1px
+
+.menu
+  flex: 1
+
+.discounts
+  display: flex
+  align-self: center
+  background: #E32636
+  align-items: stretch
+  text-transform: uppercase
+  padding: 14px
+
+.cart
+  flex: 1
+  max-width: 220px
+  background: #f57f37
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 480px
+  cursor: pointer
