@@ -1,3 +1,5 @@
+$orange: #f57f37
+
 html, body
   margin: 0
   padding: 0
@@ -8,12 +10,17 @@ html, body
   line-height: 1.42857143
   min-width: 300px
 
+ul
+  list-style: none
+  padding: 0
+
 a
   color: inherit
 
 header
   position: sticky
   top: -1px
+  z-index: 9999
 
 .top
   display: flex
@@ -40,8 +47,8 @@ header
     font: normal normal normal 14px/1 FontAwesome
     font-size: inherit
     text-rendering: auto
-    color: #f57f37
-    display: none
+    color: $orange
+    display: inline-block
 
 .additional-links, .links
   display: none
@@ -56,7 +63,6 @@ header
   ul
     margin: auto
     display: inline-flex
-    list-style: none
     li
       float: left
       margin-left: 10px
@@ -81,12 +87,283 @@ header
     margin-left: 20px
     margin-right: 20px
   div:hover
-    color: #f57f37
+    color: $orange
 
-.block-timetable
+nav
+  background: #29100d
+  color: white
+  font-size: 20px
+  position: sticky
+  display: flex
+  top: 1px
+
+.main-nav
+  flex: 1
+  display: flex
+  align-items: center
+  justify-content: space-between
+  z-index: 90
+  font-weight: bold
+
+.nav-item
+  font-size: 13px
+  text-transform: uppercase
+  padding: 10px 3px
+  text-align: center
+  flex: 1
+  color: #bfbfbf
+
+.main-nav
+  .nav-item
+    display: none
+  .additional-links
+    display: flex
+    font-size: 21px
+
+a:hover
+  color: $orange
+  text-decoration: none
+
+.discounts
+  display: flex
+  align-self: center
+  background: #E32636
+  align-items: stretch
+  text-transform: uppercase
+  padding: 14px
+  font-size: 18px
+
+.cart
+  flex: 1
+  max-width: 220px
+  background: $orange
+  display: flex
+  align-items: center
+  justify-content: space-between
+  width: 480px
+  cursor: pointer
+
+.cart:hover
+  color: white
+  text-decoration: none
+
+.block-cart
+  display: inline-block
+  padding-left: 14px
+  font-size: 26px
+
+.view-cart
+  margin-right: 10px
+  font-size: 18px
+
+.mobile-menu-layer
+  background: rgba(40,14,13,0.96)
+  position: absolute
+  left: 0
+  right: 0
+  z-index: 99
+  top: 48px
   display: none
 
+.fa-bars
+  margin-left: 10px
+
+.block-phone
+  display: inline-block
+
+.menu-holder
+  li
+    text-align: left
+    font-size: 16px
+    line-height: 10px
+
+.menu
+  margin: 20px
+  border-bottom: 1px solid #5f5f5f
+
+footer
+  display: flex
+  justify-content: space-around
+  width: 100%
+
+.footer-container
+  display: flex
+  justify-content: space-around
+  background-image: url(../images/footer-back.png)
+  background-size: cover
+  padding-top: 80px
+  padding-bottom: 20px
+  width: 1200px
+  position: relative
+
+.title-name-menu
+  padding-bottom: 20px
+  font-size: 20px
+  color: #555
+  text-transform: uppercase
+
+.menu-footer
+  line-height: 2
+  margin-left: 0
+  ul, ol
+    margin-top: 0
+    margin-bottom: 10px
+  .fa
+    color: $orange
+    margin-right: 10px
+
+#footer-popular
+  display: none
+
+.fish
+  position: absolute
+  bottom: 30px
+  left: 400px
+  display: none
+
+.bg-wave
+  height: 212px
+  background: url(../images/wave.png) no-repeat
+  background-size: cover
+  display: flex
+  justify-content: space-around
+  padding-top: 70px
+
+.phone-footer
+  color: white
+  padding: 15px 20px
+  font-size: 30px
+
+.block-copyright
+    display: none
+
+.prod-block
+  width: 25%
+  border-bottom: 5px dashed #ddd
+  padding-bottom: 40px
+  margin: 20px
+  position: relative
+  overflow: hidden
+  img
+    width: 100%
+
+.btn-favorite
+  position: absolute
+  top: 10px
+  left: 10px
+  z-index: 5
+  cursor: pointer
+  padding: 4px 7px 0 0
+  font-size: 30px
+  color: $orange
+
+.name-prod
+  margin-bottom: 22px
+  height: 68px
+  overflow: hidden
+  text-align: center
+  a
+    font-size: 24px
+    color: #555
+    text-decoration: none
+    cursor: pointer
+  a:hover
+    color: $orange
+
+.main-block-attr-price
+  min-height: 110px
+  display: flex
+  justify-content: space-around
+  margin-bottom: 30px
+
+.block-table
+  width: auto
+  display: inline-block
+
+.prod-img
+  overflow: hidden
+  max-height: 20%
+  img
+    transition: all 1s ease-out
+    height: auto
+  img:hover
+    transform: scale(1.1)
+
+.bg-buy
+  display: none
+
+.table
+  border-collapse: collapse
+  border-spacing: 0
+  th
+    border: 1px solid #ddd
+
+.weight
+  width: 22px
+  height: 24px
+  background: url(../images/sprite-img.png) no-repeat -54px 0
+  display: block
+  margin: 0 auto
+
+.quantity
+  width: 25px
+  height: 25px
+  background: url(../images/sprite-img.png) no-repeat -54px -28px
+  display: block
+  margin: 0 auto
+
+.Kcal
+  width: 29px
+  height: 25px
+  background: url(../images/sprite-img.png) no-repeat -54px -55px
+  display: block
+  margin: 0 auto
+
+.btn-buy
+  position: relative
+  min-width: 120px
+  max-width: 100%
+  margin: 0 16px
+  padding: 6px 14px
+  font-size: 20px
+  font-weight: bold
+  color: #333
+  border: 2px solid $orange
+  border-radius: 6px
+  cursor: pointer
+  text-align: center
+  transition: 0.3s all
+
+.btn-buy:hover
+  background: $orange
+  color: white
+
+.block-price-buy
+  width: 100px
+  font-size: 26px
+
+.prod-count
+  height: 20px
+  padding: 14px 4px
+  margin: 5px
+  border: 1px solid #ddd
+  border-radius: 0
+  box-shadow: none
+  width: 36px
+  font-size: 12px
+  min-width: auto
+  flex: 1
+  text-align: center
+  font-weight: initial
+
+.cat-plus, .cat-minus
+  color: $orange
+
+
 @media (min-width: 1000px)
+  .block-copyright
+    display: block
+
   .logo
     padding: 10px 17px
 
@@ -99,13 +376,22 @@ header
   .telephones
     min-width: 200px
 
-  .phone i
-    display: inline-block
-
-.block-phone
-  display: inline-block
+  .main-nav
+    .nav-item
+      display: block
+    justify-content: space-around
+    .additional-links
+      display: none
+    .menu-button
+      display: none
 
 @media (min-width: 1150px)
+  #footer-popular
+    display: block
+
+  .fish
+    display: block
+
   .logo
     max-width: 400px
 
@@ -115,38 +401,28 @@ header
   .phone
     font-size: 20px
 
-@media (max-width: 400px)
+@media (max-width: 500px)
+  .footer-container
+    display: grid
+    grid-template-columns: 1fr
+    padding-left: 50px
+
   .telephones
     font-size: 70%
 
   .logo
     max-width: 150px
 
-nav
-  background: #29100d
-  color: white
-  font-size: 20px
-  position: sticky
-  display: flex
-  top: 1px
+  .phone i
+    display: none
 
-.menu
-  flex: 1
+  .main-nav
+    justify-content: space-around
+    .additional-links
+      display: none
 
-.discounts
-  display: flex
-  align-self: center
-  background: #E32636
-  align-items: stretch
-  text-transform: uppercase
-  padding: 14px
+  .view-cart
+    display: none
 
-.cart
-  flex: 1
-  max-width: 220px
-  background: #f57f37
-  display: flex
-  justify-content: center
-  align-items: center
-  width: 480px
-  cursor: pointer
+  .cart
+    justify-content: space-around
