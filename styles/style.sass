@@ -238,7 +238,6 @@ footer
     display: none
 
 .prod-block
-  width: 25%
   border-bottom: 5px dashed #ddd
   padding-bottom: 40px
   margin: 20px
@@ -274,6 +273,7 @@ footer
   min-height: 110px
   display: flex
   justify-content: space-around
+  flex-wrap: wrap
   margin-bottom: 30px
 
 .block-table
@@ -282,7 +282,7 @@ footer
 
 .prod-img
   overflow: hidden
-  max-height: 20%
+  max-height: 60%
   img
     transition: all 1s ease-out
     height: auto
@@ -295,6 +295,7 @@ footer
 .table
   border-collapse: collapse
   border-spacing: 0
+  text-align: center
   th
     border: 1px solid #ddd
 
@@ -326,7 +327,6 @@ footer
   margin: 0 16px
   padding: 6px 14px
   font-size: 20px
-  font-weight: bold
   color: #333
   border: 2px solid $orange
   border-radius: 6px
@@ -359,6 +359,10 @@ footer
 .cat-plus, .cat-minus
   color: $orange
 
+.product-container
+  width: 100%
+  display: grid
+  grid-template-columns: 1fr
 
 @media (min-width: 1000px)
   .block-copyright
@@ -426,3 +430,11 @@ footer
 
   .cart
     justify-content: space-around
+
+@media (min-width: 576px)
+  .product-container
+    grid-template-columns: repeat(2, 1fr)
+
+@media (min-width: 768px)
+  .product-container
+    grid-template-columns: repeat(4, 1fr)
