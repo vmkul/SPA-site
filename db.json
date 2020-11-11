@@ -1,0 +1,181 @@
+{
+  "products": [
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Sushi cake L",
+      "productDescription": "About Pizza ... ",
+      "price": 849,
+      "image": "images/sushi-tort-l.jpg",
+      "weight": 1465,
+      "quantity": 60,
+      "KCal": 1034,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Fudzi",
+      "productDescription": "About Pizza ... ",
+      "price": 149,
+      "image": "images/fudzi.jpg",
+      "weight": 200,
+      "quantity": 8,
+      "KCal": 209,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Bonito",
+      "productDescription": "About Pizza ... ",
+      "price": 149,
+      "image": "images/bonito.jpg",
+      "weight": 195,
+      "quantity": 8,
+      "KCal": 208,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "1 kilo set",
+      "productDescription": "About Pizza ... ",
+      "price": 399,
+      "image": "images/set-1-kilogramm.jpg",
+      "weight": 1000,
+      "quantity": 40,
+      "KCal": 1432,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Eel sushi",
+      "productDescription": "About Pizza ... ",
+      "price": 49,
+      "image": "images/sushi-ugor.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 34,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Tuna sushi",
+      "productDescription": "About Pizza ... ",
+      "price": 35,
+      "image": "images/sushi-tunets.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 33,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Salmon sushi",
+      "productDescription": "About Pizza ... ",
+      "price": 29,
+      "image": "images/sushi-losos.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 21,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Shrimp sushi",
+      "productDescription": "About Pizza ... ",
+      "price": 39,
+      "image": "images/sushi-krevetka.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 25,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Crab cream gunkan-maki",
+      "productDescription": "About Pizza ... ",
+      "price": 19,
+      "image": "images/gunkan-krab-krem.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 32,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Seaweed gunkan-maki",
+      "productDescription": "About Pizza ... ",
+      "price": 19,
+      "image": "images/gunkan-hiyashi-vakame.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 22,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Spicy salmon gunkan-maki",
+      "productDescription": "About Pizza ... ",
+      "price": 25,
+      "image": "images/gunkan-spajs-losos.jpg",
+      "weight": 30,
+      "quantity": 1,
+      "KCal": 43,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    },
+    {
+      "url": "pizza_mozzarella",
+      "productName": "Night",
+      "productDescription": "About Pizza ... ",
+      "price": 59,
+      "image": "images/desert-noch.jpg",
+      "weight": 130,
+      "quantity": 6,
+      "KCal": 278,
+      "relatedProductIds": [7,12,98],
+      "categoryId": 3,
+      "recommended": true
+    }
+  ],
+  "productsCategories": [{
+    "url": "vegeterian",
+    "name": "Вегетарианские",
+    "description": "More details ... "
+  }],
+  "recommendations": [2,5,7,11],
+  "actions": [{
+    "url": "privedi_druga",
+    "name": "Акция Приведи друга!",
+    "description": "Детали акции ... ",
+    "datePosted": "25.02.2020"
+
+  }],
+  "sliderData": [{
+    "url": ""
+  }],
+  "infoPages": [{
+    "url": "about",
+    "name": "О нас",
+    "content": "Информация ..."
+  }]
+}
