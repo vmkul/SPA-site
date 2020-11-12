@@ -56,7 +56,9 @@ const types = {
         client.res.statusCode = 200;
       client.res.setHeader('content-type', 'application/json');
       client.res.setHeader('Access-Control-Allow-Origin', '*');
-      client.res.end(data, 'UTF-8');
+      setTimeout(() => {
+        client.res.end(data, 'UTF-8');
+      }, 1000);
     };
     handler(client, cb);
   }
