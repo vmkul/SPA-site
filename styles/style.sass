@@ -246,6 +246,22 @@ footer
   img
     width: 100%
 
+.prod-info-block
+  border-bottom: 5px dashed #ddd
+  padding-bottom: 40px
+  margin: 20px
+  position: relative
+  overflow: hidden
+  display: flex
+  justify-content: space-around
+  flex-wrap: wrap
+  img
+    width: 100%
+
+.product-description
+  margin: 20px
+  width: 100%
+
 .btn-favorite
   position: absolute
   top: 10px
@@ -280,15 +296,21 @@ footer
   width: auto
   display: inline-block
 
-.prod-img
+%prod-img
   overflow: hidden
-  max-height: 60%
   cursor: pointer
   img
     transition: all 1s ease-out
     height: auto
   img:hover
     transform: scale(1.1)
+
+.prod-card-img
+  @extend %prod-img
+  max-height: 60%
+
+.prod-info-img
+  @extend %prod-img
 
 .bg-buy
   display: none
