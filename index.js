@@ -17,9 +17,12 @@ const routes = {
   '/products': (client, cb) => {
     cb(JSON.stringify(data.products));
   },
-  '/': (client, cb) => {
-    client.req.url = '/index.html';
-    loadFile(client, cb);
+  '/product/*': (client, cb) => {
+    const { url } = client.req;
+    const product = data.products.find(prod => {
+      return prod.url === url.substring(9, url.length);
+    });
+    cb(JSON.stringify(product));
   },
   '/index.html': loadFile,
   '/contactus.html': loadFile,
@@ -58,7 +61,7 @@ const types = {
       client.res.setHeader('Access-Control-Allow-Origin', '*');
       setTimeout(() => {
         client.res.end(data, 'UTF-8');
-      }, 1000);
+      }, 500);
     };
     handler(client, cb);
   }
