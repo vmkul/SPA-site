@@ -3,7 +3,7 @@
     {
       "url": "sushi-cake-l",
       "productName": "Sushi cake L",
-      "productDescription": "About Pizza ... ",
+      "productDescription": "Various types of sushi in festive packaging",
       "price": 849,
       "image": "images/sushi-tort-l.jpg",
       "weight": 1465,
@@ -14,7 +14,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "fudzi",
       "productName": "Fudzi",
       "productDescription": "About Pizza ... ",
       "price": 149,
@@ -27,7 +27,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "bonito",
       "productName": "Bonito",
       "productDescription": "About Pizza ... ",
       "price": 149,
@@ -40,7 +40,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "1_kilo_set",
       "productName": "1 kilo set",
       "productDescription": "About Pizza ... ",
       "price": 399,
@@ -53,7 +53,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "eel_sushi",
       "productName": "Eel sushi",
       "productDescription": "About Pizza ... ",
       "price": 49,
@@ -66,7 +66,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "tuna_sushi",
       "productName": "Tuna sushi",
       "productDescription": "About Pizza ... ",
       "price": 35,
@@ -79,7 +79,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "salmon_sushi",
       "productName": "Salmon sushi",
       "productDescription": "About Pizza ... ",
       "price": 29,
@@ -92,7 +92,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "shrimp_sushi",
       "productName": "Shrimp sushi",
       "productDescription": "About Pizza ... ",
       "price": 39,
@@ -105,7 +105,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "crab_cream_maki",
       "productName": "Crab cream gunkan-maki",
       "productDescription": "About Pizza ... ",
       "price": 19,
@@ -118,7 +118,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "seaweed_maki",
       "productName": "Seaweed gunkan-maki",
       "productDescription": "About Pizza ... ",
       "price": 19,
@@ -131,7 +131,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "spicy_salmon_maki",
       "productName": "Spicy salmon gunkan-maki",
       "productDescription": "About Pizza ... ",
       "price": 25,
@@ -144,7 +144,7 @@
       "recommended": true
     },
     {
-      "url": "pizza_mozzarella",
+      "url": "night",
       "productName": "Night",
       "productDescription": "About Pizza ... ",
       "price": 59,
