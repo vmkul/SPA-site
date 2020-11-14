@@ -6,6 +6,9 @@ const fs = require('fs');
 const qs = require('querystring');
 const data = require('./db.json');
 
+const productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
+const productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
+
 const loadFile = (client, cb) => {
   const { pathname } = url.parse('.' + client.req.url);
   fs.promises.readFile(pathname)
@@ -15,14 +18,20 @@ const loadFile = (client, cb) => {
 
 const routes = {
   '/products': (client, cb) => {
-    cb(JSON.stringify(data.products));
+    cb(JSON.stringify( {
+      products: data.products,
+      template: productCardTemplate,
+    }));
   },
   '/product/*': (client, cb) => {
     const { url } = client.req;
     const product = data.products.find(prod => {
       return prod.url === url.substring(9, url.length);
     });
-    cb(JSON.stringify(product));
+    cb(JSON.stringify({
+      product,
+      template: productInfoTemplate,
+    }));
   },
   '/index.html': loadFile,
   '/contactus.html': loadFile,
