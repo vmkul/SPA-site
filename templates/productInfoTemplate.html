@@ -1,0 +1,65 @@
+<div class="prod-info-img">
+  <div class="btn-favorite " data-auth="0">
+    <i class="fa  fa-heart-o " aria-hidden="true"></i>
+  </div>
+  <img src="{{ image }}" alt="fish">
+
+  <div class="bg-buy">
+    <div class="btn-delete-buy"></div>
+    <div class="delete-name">Remove from cart</div>
+  </div>
+</div>
+
+<div><div class="name-prod">
+  <a href="#product/{{ url }}">
+    {{ productName }}
+  </a>
+  <meta content="">
+</div>
+  <div class="description" style="position: relative">
+  </div>
+  <div class="main-block-attr-price">
+
+    <div class="block-table">
+      <table class="table">
+        <tbody>
+        <tr class="attr-img">
+
+          <th><span class="weight"></span></th>
+
+          <th><span class="quantity"></span></th>
+
+          <th><span class="Kcal"></span></th>
+
+        </tr>
+        <tr class="attr-number">
+
+          <th>{{ weight }}</th>
+
+          <th>{{ quantity }}</th>
+
+          <th>{{ KCal }}</th>
+
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="block-price-buy">
+      <div class="block-price">
+        <div class="price"><span>{{ price }}</span> <span>грн</span></div>
+
+      </div>
+      <div class="category-count">
+        <div class="count-inner">
+          <span class="cat-minus">‒</span>
+          <input type="text" class="prod-count" value="1">
+          <span class="cat-plus">+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn-buy">
+    To order
+  </div>
+</div>
