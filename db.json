@@ -9,7 +9,7 @@
       "weight": 1465,
       "quantity": 60,
       "KCal": 1034,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [5, 4, 7],
       "categoryId": 3,
       "recommended": true
     },
@@ -22,7 +22,7 @@
       "weight": 200,
       "quantity": 8,
       "KCal": 209,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -35,7 +35,7 @@
       "weight": 195,
       "quantity": 8,
       "KCal": 208,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -48,7 +48,7 @@
       "weight": 1000,
       "quantity": 40,
       "KCal": 1432,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -61,7 +61,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 34,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -74,7 +74,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 33,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -87,7 +87,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 21,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -100,7 +100,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 25,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -113,7 +113,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 32,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -126,7 +126,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 22,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -139,7 +139,7 @@
       "weight": 30,
       "quantity": 1,
       "KCal": 43,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     },
@@ -152,7 +152,7 @@
       "weight": 130,
       "quantity": 6,
       "KCal": 278,
-      "relatedProductIds": [7,12,98],
+      "relatedProductIds": [0, 1, 2],
       "categoryId": 3,
       "recommended": true
     }
@@ -163,13 +163,57 @@
     "description": "More details ... "
   }],
   "recommendations": [2,5,7,11],
-  "actions": [{
-    "url": "privedi_druga",
-    "name": "Акция Приведи друга!",
-    "description": "Детали акции ... ",
-    "datePosted": "25.02.2020"
-
-  }],
+  "specials": [
+    {
+      "url": "zaberi-sam",
+      "name": "TAKE BY YOURSELF!",
+      "description": "1+1 = 1",
+      "datePosted": "2020-03-20",
+      "image": "images/111-zaberi-sam.jpg"
+    },
+    {
+      "url": "darim-desertiki-gotovim-s-lyubovyu3",
+      "name": "HAPPY TIME -25%",
+      "description": "ANY DISH WITH 25% DISCOUNT!\nEVERY DAY FROM 10:00 A.M. TO 4:00 P.M.\nALL MENU*",
+      "datePosted": "2016-05-25",
+      "image": "images/darim-desertiki-gotovim-s-lyubovyu3.jpg"
+    },
+    {
+      "url": "set-dnya",
+      "name": "SET OF THE DAY! 299 UAH!",
+      "description": "Tuesday - Philadelphia for 3 persons set - 299 UAH\n\nWednesday - California for 3 persons set - 299 UAH\nThursday - 3 Dragons set - 299 UAH\n\nFrom 10:00 a.m. to 10:00 p.m.",
+      "datePosted": "2020-02-10",
+      "image": "images/-set-dnya-.jpg"
+    },
+    {
+      "url": "20-dlya-imeninnikov",
+      "name": "DISCOUNT -20% FOR BIRTHDAYS!",
+      "description": "ALL MENU *\n\nON BIRTHDAY AND FOR A WEEK AFTER!\n\nWE GIVE 20% TO ALL BIRTHDAYS!",
+      "datePosted": "2020-01-07",
+      "image": "images/skidka--20-dlya-imeninnikov.jpg"
+    },
+    {
+      "url": "roll-v-podarok-za-foto-zakaza",
+      "name": "GIFT FOR PHOTO REVIEW",
+      "description": "MAKE A PHOTO OF FAVORITE ROLLS\n\nWRITE A REVIEW AND ADD A PHOTO\n\nGET A CHEF ROLL AT THE NEXT ORDER!",
+      "datePosted": "2020-01-07",
+      "image": "images/roll-v-podarok-za-foto-zakaza.jpg"
+    },
+    {
+      "url": "acsii-insta-rozigrash",
+      "name": "DRAW EVERY MONTH!",
+      "description": "INSTAGRAM SET\n\nEVERY MONTH OF LUCK IS WAITING FOR YOU!\n\nANY SET CAN FREE BECOME YOURS!",
+      "datePosted": "2020-05-20",
+      "image": "images/insta-rozigrash.jpg"
+    },
+    {
+      "url": "acsii-free-napitok",
+      "name": "FREE NAPITOK",
+      "description": "FOR EVERY SET!",
+      "datePosted": "2020-10-12",
+      "image": "images/free-napitok.jpg"
+    }
+  ],
   "sliderData": [{
     "url": ""
   }],
