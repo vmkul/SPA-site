@@ -253,7 +253,7 @@ footer
   position: relative
   overflow: hidden
   display: flex
-  justify-content: space-around
+  justify-content: center
   flex-wrap: wrap
   img
     width: 100%
@@ -291,10 +291,12 @@ footer
   justify-content: space-around
   flex-wrap: wrap
   margin-bottom: 30px
+  padding-left: 15px
 
 .block-table
   width: auto
   display: inline-block
+  margin-right: 15px
 
 %prod-img
   overflow: hidden
@@ -387,9 +389,44 @@ footer
   display: grid
   grid-template-columns: 1fr
 
-.page-content
+.related-container
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+
+.loader
   display: flex
-  justify-content: space-around
+  justify-content: center
+
+.special-block
+  display: grid
+  grid-template-columns: 50% 50%
+  position: relative
+  img
+    width: 100%
+
+.special-description
+  padding: 15px
+  font-size: 20px
+  background: #f8f8f8
+
+.special-date
+  position: absolute
+  left: 15px
+  top: 0
+  width: 92px
+  height: 110px
+  background: #669d41
+  text-align: center
+  z-index: 2
+  color: white
+  font-size: 20px
+  padding-top: 10px
+
+.date-day
+  font-size: 160%
+
+.date-m-y
+  margin-top: 20px
 
 @media (min-width: 1000px)
   .block-copyright
@@ -433,6 +470,12 @@ footer
     font-size: 20px
 
 @media (max-width: 500px)
+  .special-block
+    grid-template-columns: 1fr
+
+  #special-description-text
+    display: none
+
   .footer-container
     display: grid
     grid-template-columns: 1fr
