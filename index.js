@@ -6,8 +6,15 @@ const fs = require('fs');
 const qs = require('querystring');
 const data = require('./db.json');
 
-const productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
-const productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
+let productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
+let productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
+let specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
+
+fs.watch('./templates', () => {
+  productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
+  productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
+  specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
+});
 
 const loadFile = (client, cb) => {
   const { pathname } = url.parse('.' + client.req.url);
@@ -25,12 +32,27 @@ const routes = {
   },
   '/product/*': (client, cb) => {
     const { url } = client.req;
+    const related = [];
+
     const product = data.products.find(prod => {
       return prod.url === url.substring(9, url.length);
     });
+
+    product.relatedProductIds.forEach(id => {
+      related.push(data.products[id]);
+    });
+
     cb(JSON.stringify({
       product,
-      template: productInfoTemplate,
+      productInfoTemplate,
+      productCardTemplate,
+      related,
+    }));
+  },
+  '/specials': (client, cb) => {
+    cb(JSON.stringify({
+      template: specialBlockTemplate,
+      specials: data.specials,
     }));
   },
   '/index.html': loadFile,

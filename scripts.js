@@ -22,9 +22,9 @@ const emptyDiv = element => {
 
 window.addEventListener('popstate', async () => {
   emptyDiv(pageContent);
-  const loader = document.createElement('img');
-  loader.src = 'images/spinner.gif';
-  loader.alt = 'loader';
+  const loader = document.createElement('div');
+  loader.innerHTML = '<img src="images/spinner.gif" alt="loader">'
+  loader.className = 'loader';
   pageContent.appendChild(loader);
   const hash = document.location.hash;
   window.scroll(0, 0);
@@ -48,9 +48,33 @@ window.addEventListener('popstate', async () => {
     const parsed = await response.json();
     emptyDiv(pageContent);
     const product = document.createElement('div');
-    product.className = 'prod-info-block';
     pageContent.appendChild(product);
-    product.innerHTML = Mustache.render(parsed.template, parsed.product);
+    product.innerHTML = Mustache.render(parsed.productInfoTemplate, parsed.product);
+    const relatedContainer = document.createElement('div');
+    relatedContainer.className = 'related-container';
+    pageContent.appendChild(relatedContainer);
+
+    parsed.related.forEach(productInfo => {
+      const product = document.createElement('div');
+      product.className = 'prod-block';
+      relatedContainer.appendChild(product);
+      product.innerHTML = Mustache.render(parsed.productCardTemplate, productInfo);
+    });
+  } else if (hash === '#specials') {
+    //pageContent.innerHTML = '<h1>SPECIALS</h1>';
+    const response = await fetch(`${serverAddress}/specials`);
+    const parsed = await response.json();
+    emptyDiv(pageContent);
+    console.log(parsed);
+
+    parsed.specials.forEach(spec => {
+      const date = new Date(spec.datePosted);
+      spec.day = date.getDate() - 1;
+      spec.monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`
+      const element = document.createElement('div');
+      pageContent.appendChild(element);
+      element.innerHTML = Mustache.render(parsed.template, spec);
+    });
   } else {
     pageContent.innerHTML = '<h1>Not found</h1>';
   }
