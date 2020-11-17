@@ -42,8 +42,8 @@ window.addEventListener('popstate', async () => {
       productContainer.appendChild(product);
       product.innerHTML = Mustache.render(parsed.template, productInfo);
     });
-  } else if (hash.startsWith('#product')) {
-    const url = `${serverAddress}/product${hash.substring(hash.indexOf('/'), hash.length)}`;
+  } else if (hash.startsWith('#product/')) {
+    const url = `${serverAddress}/${hash.slice(1)}`;
     const response = await fetch(url);
     const parsed = await response.json();
     emptyDiv(pageContent);
@@ -61,11 +61,10 @@ window.addEventListener('popstate', async () => {
       product.innerHTML = Mustache.render(parsed.productCardTemplate, productInfo);
     });
   } else if (hash === '#specials') {
-    //pageContent.innerHTML = '<h1>SPECIALS</h1>';
-    const response = await fetch(`${serverAddress}/specials`);
+    const response = await fetch(`${serverAddress}/${hash.slice(1)}`);
     const parsed = await response.json();
     emptyDiv(pageContent);
-    console.log(parsed);
+    pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">SPECIALS</h1>';
 
     parsed.specials.forEach(spec => {
       const date = new Date(spec.datePosted);
@@ -75,6 +74,12 @@ window.addEventListener('popstate', async () => {
       pageContent.appendChild(element);
       element.innerHTML = Mustache.render(parsed.template, spec);
     });
+  } else if (hash.startsWith('#special/')) {
+    const response = await fetch(`${serverAddress}/special${hash.substring(hash.indexOf('/'), hash.length)}`);
+    const parsed = await response.json();
+    emptyDiv(pageContent);
+
+    pageContent.innerHTML = Mustache.render(parsed.template, parsed.special);
   } else {
     pageContent.innerHTML = '<h1>Not found</h1>';
   }
