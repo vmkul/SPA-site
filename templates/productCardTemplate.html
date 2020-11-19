@@ -52,13 +52,13 @@
     </div>
     <div class="category-count">
       <div class="count-inner">
-        <span class="cat-minus">‒</span>
-        <input type="text" class="prod-count" value="1">
-        <span class="cat-plus">+</span>
+        <span class="cat-minus" onclick="handleRemoveProduct('{{ url }}')">‒</span>
+        <input type="text" class="prod-count" value="1" id="{{ url }}">
+        <span class="cat-plus" onclick="handleAddProduct('{{ url }}')">+</span>
       </div>
     </div>
   </div>
 </div>
-<div class="btn-buy">
+<div class="btn-buy" onclick="handleAddToCart('{{ url }}')">
   To order
 </div>

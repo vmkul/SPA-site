@@ -3,8 +3,29 @@
 const menuButton = document.getElementById('menu-button');
 const mobileMenu = document.getElementById('mobile-menu-layer');
 const pageContent = document.getElementById('page-content');
+const storage = window.localStorage;
+
+if (!storage.getItem('cart')) storage.setItem('cart', '{}');
 
 const serverAddress = 'http://localhost:4000';
+
+const handleAddProduct = productUrl => {
+  const productCountInput = document.getElementById(productUrl);
+  productCountInput.value++;
+};
+
+const handleRemoveProduct = productUrl => {
+  const productCountInput = document.getElementById(productUrl);
+  if (productCountInput.value > 1) {
+    productCountInput.value--;
+  }
+};
+
+const handleAddToCart = productUrl => {
+  const cart = JSON.parse(storage.getItem('cart'));
+  cart[productUrl] = document.getElementById(productUrl).value;
+  storage.setItem('cart', JSON.stringify(cart));
+};
 
 menuButton.onclick = () => {
   if (mobileMenu.style.display === 'block') {
