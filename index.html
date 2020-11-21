@@ -53,7 +53,7 @@
       <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
     </div>
   </div>
-  </div>
+</div>
 </div>
 
 <header>
@@ -83,14 +83,14 @@
       </div>
     </div>
     <div class="discounts"><a href="#specials">discounts</a></div>
-    <a href="#" class="cart">
+    <a href="#cart" class="cart">
       <div class="block-cart">
         <span class="xs-price"></span>
 
         <i class="fa fa-shopping-cart " aria-hidden="true"></i>
 
       </div>
-      <div class="view-cart">Total : <span>  0 </span>  <span>грн</span>
+      <div class="view-cart">Total : <span id="cart-total">0</span>  <span>грн</span>
         <span class="arrow-cart"><i class="fa fa-angle-down"></i></span>
       </div>
     </a>
@@ -161,6 +161,87 @@
 </header>
 
 <div class="page-content" id="page-content"></div>
+<form method="post" target="_self" action="http://localhost:4000/submitorder">
+  <div class="form-section">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="shop_address_id" class="small-label">Select a store</label>
+          <select name="shop" id="shop_address_id" class="form-control" required>
+            <option value="90">Киев, пр-т. Курбаса 4Б</option>
+            <option value="80">Киев, ул. Клавдиевская 40Г </option>
+            <option value="1">Киев, ул. Г. Днепра 37</option>
+            <option value="108">Киев, ул. Ахматовой 4</option>
+            <option value="106">Киев, ул. Ломоносова 60/5</option>
+            <option value="4">Киев, Харьковское шоссе 144В</option>
+            <option value="109">Софиевская Борщаговка ул. Мира 40</option>
+            <option value="110">Вишневое, ул. Святоюрьевская 11А</option>
+            <option value="111">Киев, ул. Радунская 13</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="phone" class="small-label">Phone number</label>
+        <input type="tel" value="" name="phone" id="phone" required placeholder="+380671234567" class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="email" class="small-label">Email</label>
+        <input type="email" maxlength="100" name="email" id="email" value="" placeholder="123@mail.com" required class="form-control">
+      </div>
+      <div class="col-12">
+        <label for="name" class="small-label">Name</label>
+        <input type="text" maxlength="100" name="name" id="name" value="" placeholder="Name" required class="form-control">
+      </div>
+      <div class="col-md-6">
+        <label for="street" class="small-label">Street</label>
+        <input type="text" name="street" id="street" value="" placeholder="Street" class="form-control" required maxlength="100">
+      </div>
+      <div class="col-md-6">
+        <label for="house" class="small-label">House</label>
+        <input type="text" name="house" id="house" value="" placeholder="House" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label for="room" class="small-label">Ap.</label>
+        <input type="text" name="room" id="room" value="" placeholder="Ap." class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label for="entrance" class="small-label">Entrance</label>
+        <input type="text" name="entrance" id="entrance" value="" placeholder="Entrance" class="form-control" required>
+      </div>
+      <div class="col-md-4">
+        <label for="floor" class="small-label">Floor</label>
+        <input type="number" name="floor" id="floor" value="1" class="form-control" required max="100" min="1">
+      </div>
+      <div class="col-md-12">
+        <label for="comment" class="small-label">Comment to the order</label>
+        <textarea name="comments" id="comment" placeholder="Comment to the order" class="form-control"></textarea>
+      </div>
+      <div class="col-md-6 payment-selector">
+        <div class="form-group">
+          <label for="cash">
+            <input type="radio" id="cash" value="cash" name="payment_method" checked> Cash
+          </label>
+        </div>
+        <div class="form-group">
+          <label for="payment_card">
+            <input type="radio" id="payment_card" value="card" name="payment_method"> Card
+          </label>
+        </div>
+      </div>
+      <div class="col-md-3 payment-selector">
+        <label for="delivery_date">Delivery date:</label>
+        <input type="date" id="delivery_date" name="delivery_date" required>
+      </div>
+      <div class="col-md-3 payment-selector">
+        <label for="delivery_time">Delivery time:</label>
+        <input type="time" id="delivery_time" name="delivery_time" required>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: center">
+    <input type="submit" class="btn-buy" style="max-width: 200px" value="Make Order">
+  </div>
+</form>
 
 <footer>
   <div class="footer-container">
@@ -241,13 +322,13 @@
 </footer>
 
 <div class="bg-wave">
-    <div class="block-copyright">
-      <a href="/"><img class="logo-footer" src="images/wave-logo.png" alt="Доставка суши Киев и Пригород - Sushi-point" title="Заказать суши в Киеве - Sushi-point"></a>
-    </div>
-    <div class="phone-footer">
-      <span>(044) 361-62-32</span><br>
-      <span>(096) 933-15-17</span>
-    </div>
+  <div class="block-copyright">
+    <a href="/"><img class="logo-footer" src="images/wave-logo.png" alt="Доставка суши Киев и Пригород - Sushi-point" title="Заказать суши в Киеве - Sushi-point"></a>
+  </div>
+  <div class="phone-footer">
+    <span>(044) 361-62-32</span><br>
+    <span>(096) 933-15-17</span>
+  </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
