@@ -345,7 +345,7 @@ footer
   display: block
   margin: 0 auto
 
-.btn-buy
+%btn
   position: relative
   min-width: 120px
   max-width: 100%
@@ -359,9 +359,17 @@ footer
   text-align: center
   transition: 0.3s all
 
-.btn-buy:hover
+%btn:hover
   background: $orange
   color: white
+
+.btn-buy
+  @extend %btn
+
+.btn-cart
+  @extend %btn
+  max-width: 200px
+  margin-top: 40px
 
 .block-price-buy
   width: 100px
@@ -380,6 +388,7 @@ footer
   flex: 1
   text-align: center
   font-weight: initial
+  background: white
 
 .cat-plus, .cat-minus
   color: $orange
@@ -429,6 +438,109 @@ footer
 
 .date-m-y
   margin-top: 20px
+
+.cart-container
+  width: 100%
+
+.cart-product
+  display: flex
+  justify-content: space-around
+  border-bottom: 2px dashed #ddd
+  padding-bottom: 10px
+  img
+    max-width: 86px
+
+.block-prod-count
+  border: 1px solid #575757
+  border-radius: 0 10px
+  height: 40px
+  width: 160px
+  line-height: 35px
+  display: flex
+  justify-content: space-around
+  overflow: hidden
+
+.price-cart
+  padding-top: 5px
+  font-size: 28px
+  color: #555
+  cursor: pointer
+
+.price-cart:hover
+  color: $orange
+
+%cart-sign
+  text-align: center
+  width: 100%
+  transition: 0.4s ease
+  cursor: pointer
+  font-size: 25px
+  user-select: none
+
+%cart-sign:hover
+  background: $orange
+
+.prod-count-cart
+  width: 60px
+  margin: 0
+  padding: 0
+  height: 33px
+  font-size: 20px
+  color: #555
+  vertical-align: top
+  box-shadow: none
+  line-height: 33px
+  text-align: center
+  border: none
+  background: #fff
+
+.product-title
+  font-size: 26px
+  text-align: center
+
+.minus
+  @extend %cart-sign
+  border-right: 1px solid #575757
+
+.plus
+  @extend %cart-sign
+  border-left: 1px solid #575757
+
+.form-section
+  background: #f5f5f5
+  font-size: 22px
+  margin: 20px 20px 15px
+  border-bottom: 1px solid #dadada
+  padding: 15px
+  border-radius: 10px
+
+.small-label
+  padding-top: 10px
+  font-size: 10px
+  text-transform: uppercase
+  color: #848484
+  max-width: 100%
+  margin: 0 0 5px
+  font-weight: bold
+  display: block
+
+.payment-selector
+  display: flex
+  justify-content: space-around
+  padding-top: 20px
+
+label
+  @extend .small-label
+  font-size: 15px
+
+input[type="date"], input[type="time"]
+  border: none
+  font-weight: bold
+  text-transform: uppercase
+  color: #848484
+  display: block
+  font-size: 15px
+  padding-left: 8px
 
 @media (min-width: 1000px)
   .block-copyright
@@ -502,6 +614,9 @@ footer
 
   .cart
     justify-content: space-around
+
+  .price-cart
+    font-size: 18px
 
 @media (min-width: 576px)
   .product-container
