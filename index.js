@@ -10,13 +10,17 @@ let productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html'
 let productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
 let specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
 let specialDetailsTemplate = fs.readFileSync('./templates/specialDetailsTemplate.html', 'utf8');
+let orderTemplate = fs.readFileSync('./templates/orderTemplate.html', 'utf8');
 
 fs.watch('./templates', () => {
   productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
   productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
   specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
   specialDetailsTemplate = fs.readFileSync('./templates/specialDetailsTemplate.html', 'utf8');
+  orderTemplate = fs.readFileSync('./templates/orderTemplate.html', 'utf8');
 });
+
+const genID = () => Math.random().toString(36).substr(2, 9);
 
 const loadFile = (client, cb) => {
   const { pathname } = url.parse('.' + client.req.url);
@@ -71,11 +75,15 @@ const routes = {
   },
   '/index.html': loadFile,
   '/contactus.html': loadFile,
-  '/contactus.html*': (client, cb) => {
+  '/submitorder': (client, cb) => {
     const chunks = [];
     client.req.on('data', chunk => chunks.push(chunk));
     client.req.on('end', () => {
-      cb(JSON.stringify(qs.parse(chunks.join().toString())));
+      console.log(JSON.parse(chunks.join().toString()));
+      cb(JSON.stringify({
+        id: genID(),
+        template: orderTemplate,
+      }));
     });
   },
   '/aboutus.html': loadFile,
@@ -106,7 +114,7 @@ const types = {
       client.res.setHeader('Access-Control-Allow-Origin', '*');
       setTimeout(() => {
         client.res.end(data, 'UTF-8');
-      }, 500);
+      }, 0);
     };
     handler(client, cb);
   }
@@ -129,4 +137,4 @@ http.createServer((req, res) => {
   const type = typeof handler;
   const serializer = types[type];
   serializer({ req, res }, handler);
-}).listen(4000);
+}).listen(5000);
