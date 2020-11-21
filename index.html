@@ -161,7 +161,8 @@
 </header>
 
 <div class="page-content" id="page-content"></div>
-<form method="post" target="_self" action="http://localhost:4000/submitorder">
+
+<form style="display: none;">
   <div class="form-section">
     <div class="row">
       <div class="col-md-12">
@@ -182,7 +183,7 @@
       </div>
       <div class="col-md-6">
         <label for="phone" class="small-label">Phone number</label>
-        <input type="tel" value="" name="phone" id="phone" required placeholder="+380671234567" class="form-control">
+        <input type="tel" value="" pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$" name="phone" id="phone" required placeholder="+380671234567" class="form-control">
       </div>
       <div class="col-md-6">
         <label for="email" class="small-label">Email</label>
