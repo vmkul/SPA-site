@@ -8,14 +8,11 @@ const orderForm = document.querySelector('form');
 const now = new Date();
 document.getElementById('delivery_date').valueAsDate = now;
 document.getElementById('delivery_time').value = now.toLocaleTimeString().substring(0, 5);
-const storage = window.localStorage;
-
-if (!storage.getItem('cart')) storage.setItem('cart', '{}');
 
 const serverAddress = 'http://localhost:5000';
 
 const cartTemplate = '<div class="cart-container">\n' +
-  '  <div class="cart-product">\n' +
+  '  <div class="cart-product" id="cart/{{ url }}">\n' +
   '\n' +
   '    <div style="display: flex; align-items: center">\n' +
   '      <img src="{{ image }}" alt="prod image">\n' +
@@ -32,7 +29,7 @@ const cartTemplate = '<div class="cart-container">\n' +
   '    </div>\n' +
   '\n' +
   '    <div style="display: flex; align-items: center">\n' +
-  '      <div onclick="handleRemoveFromCart(\'{{ url }}\')" class="price-cart"> <span id="\'{{ url }}/price\'">{{ price }}</span> <span>грн</span>\n' +
+  '      <div onclick="handleRemoveFromCart(\'{{ url }}\')" class="price-cart"> <span id="{{ url }}/price">{{ price }}</span> <span>грн</span>\n' +
   '        <i class="fa fa-times" aria-hidden="true"></i>\n' +
   '      </div>\n' +
   '    </div>\n' +
@@ -95,6 +92,22 @@ class Router {
   }
 }
 
+class Cart {
+  constructor(id) {
+    this.storage = window.localStorage;
+    this.id = id;
+    if (!this.storage.getItem(id)) this.storage.setItem(id, '{}');
+  }
+
+  get items() {
+    return JSON.parse(this.storage.getItem(this.id));
+  }
+
+  set items(obj) {
+    this.storage.setItem(this.id, JSON.stringify(obj));
+  }
+}
+
 const updatePage = window.dispatchEvent.bind(null, new Event('popstate'));
 
 const apiRequest = async url => {
@@ -103,7 +116,8 @@ const apiRequest = async url => {
 }
 
 const updateCartTotal = async () => {
-  const cart = JSON.parse(storage.getItem('cart'));
+  const cart = prodCart.items;
+
   if (!cart) {
     cartTotal.innerText = '0';
     return;
@@ -112,10 +126,14 @@ const updateCartTotal = async () => {
   let total = 0;
 
   for (const [ prod_url, count ] of Object.entries(cart)) {
-    const url = `${serverAddress}/product/${prod_url}`;
-    const response = await fetch(url);
-    const parsed = await response.json();
-    total += parsed.product.price * count;
+    const url = `product/${prod_url}`;
+    const parsed = await apiRequest(url);
+    const price = parsed.product.price * count;
+    const prodPrice = document.getElementById(`${prod_url}/price`);
+    if (prodPrice) {
+      prodPrice.innerText = price.toString();
+    }
+    total += price;
   }
 
   cartTotal.innerText = total.toString();
@@ -133,18 +151,20 @@ const handleRemoveProduct = productUrl => {
   }
 };
 
-const handleAddToCart = productUrl => {
-  const cart = JSON.parse(storage.getItem('cart'));
+const handleAddToCart = async productUrl => {
+  const cart = prodCart.items;
   cart[productUrl] = document.getElementById(productUrl).value;
-  storage.setItem('cart', JSON.stringify(cart));
-  updatePage();
+  prodCart.items = cart;
+  await updateCartTotal();
 };
 
-const handleRemoveFromCart = productUrl => {
-  const cart = JSON.parse(storage.getItem('cart'));
+const handleRemoveFromCart = async productUrl => {
+  const cart = prodCart.items;
   delete cart[productUrl];
-  storage.setItem('cart', JSON.stringify(cart));
-  updatePage();
+  prodCart.items = cart;
+  await updateCartTotal();
+  if (!Object.keys(cart).length) return updatePage();
+  document.getElementById(`cart/${productUrl}`).remove();
 };
 
 menuButton.onclick = () => {
@@ -160,6 +180,8 @@ const emptyDiv = element => {
     pageContent.removeChild(element.firstChild);
   }
 };
+
+const prodCart = new Cart('cart');
 
 const router = new Router(async () => {
   const parsed = await apiRequest('products');
@@ -210,7 +232,7 @@ router.addRoute('#special/*', async () => {
 
 router.addRoute('#cart', async () => {
   emptyDiv(pageContent);
-  const cart = JSON.parse(storage.getItem('cart'));
+  const cart = prodCart.items;
   pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">Order</h1>';
 
   if (!cart || Object.entries(cart).length === 0) {
@@ -253,9 +275,9 @@ window.addEventListener('popstate', async () => {
 orderForm.onsubmit = async e => {
   e.preventDefault();
   let formData = new FormData(orderForm);
-  formData.append('cart', storage.getItem('cart'));
+  formData.append('cart', prodCart.items);
   formData = Object.fromEntries(formData);
-  storage.setItem('cart', '{}');
+  prodCart.items = {};
 
   const response = await fetch(`${serverAddress}/submitorder`, {
     method: 'POST',
