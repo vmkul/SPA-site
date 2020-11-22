@@ -10,8 +10,8 @@
       "quantity": 60,
       "KCal": 1034,
       "relatedProductIds": [5, 4, 7],
-      "categoryId": 3,
-      "recommended": true
+      "categoryId": 0,
+      "recommended": false
     },
     {
       "url": "fudzi",
@@ -23,8 +23,8 @@
       "quantity": 8,
       "KCal": 209,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
-      "recommended": true
+      "categoryId": 1,
+      "recommended": false
     },
     {
       "url": "bonito",
@@ -36,7 +36,7 @@
       "quantity": 8,
       "KCal": 208,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
+      "categoryId": 1,
       "recommended": true
     },
     {
@@ -49,8 +49,8 @@
       "quantity": 40,
       "KCal": 1432,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
-      "recommended": true
+      "categoryId": 0,
+      "recommended": false
     },
     {
       "url": "eel_sushi",
@@ -62,7 +62,7 @@
       "quantity": 1,
       "KCal": 34,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
+      "categoryId": 2,
       "recommended": true
     },
     {
@@ -75,7 +75,7 @@
       "quantity": 1,
       "KCal": 33,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
+      "categoryId": 2,
       "recommended": true
     },
     {
@@ -88,7 +88,7 @@
       "quantity": 1,
       "KCal": 21,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
+      "categoryId": 2,
       "recommended": true
     },
     {
@@ -101,7 +101,7 @@
       "quantity": 1,
       "KCal": 25,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
+      "categoryId": 2,
       "recommended": true
     },
     {
@@ -153,8 +153,8 @@
       "quantity": 6,
       "KCal": 278,
       "relatedProductIds": [0, 1, 2],
-      "categoryId": 3,
-      "recommended": true
+      "categoryId": 1,
+      "recommended": false
     }
   ],
   "productsCategories": [{
