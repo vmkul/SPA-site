@@ -36,6 +36,13 @@ const cartTemplate = '<div class="cart-container">\n' +
   '  </div>\n' +
   '</div>';
 
+const categoryIDs = {
+  sets: 0,
+  rolls: 1,
+  sushi: 2,
+  maki: 3,
+};
+
 class htmlElement {
   constructor(type, className = '', innerHTML = '', id = '') {
     this.element = document.createElement(type);
@@ -199,17 +206,30 @@ const emptyDiv = element => {
   }
 };
 
-const prodCart = new Cart('cart');
-
-const router = new Router(async () => {
-  const parsed = await apiRequest('products');
-  emptyDiv(pageContent);
+const listProducts = async (container, url, title) => {
+  const parsed = await apiRequest(url);
+  emptyDiv(container);
+  if (title) {
+    container.innerHTML = `<h1 style="text-align: center; padding: 20px">${title}</h1>`;
+  }
   const productContainer = new htmlElement('div', 'product-container', '', 'product-container');
-  productContainer.insertInto(pageContent);
+  productContainer.insertInto(container);
   parsed.products.forEach(productInfo => {
     const product = new htmlElement('div', 'prod-block', Mustache.render(parsed.template, productInfo));
     productContainer.insertChild(product);
   });
+};
+
+const prodCart = new Cart('cart');
+
+const router = new Router(async () => {
+  await listProducts(pageContent, 'popular');
+});
+
+router.addRoute('#catalog/*', async () => {
+  const categoryName = window.location.hash.split('/')[1];
+  await listProducts(pageContent, `catalog/${categoryIDs[categoryName]}`,
+    window.location.hash.split('/')[1].toLocaleUpperCase());
 });
 
 router.addRoute('#product/*', async () => {

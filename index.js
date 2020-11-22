@@ -55,6 +55,25 @@ const routes = {
       related,
     }));
   },
+  '/popular': (client, cb) => {
+    const products = data.products.filter(prod => prod.recommended);
+
+    cb(JSON.stringify({
+      products,
+      template: productCardTemplate,
+    }))
+  },
+  '/catalog/*': (client, cb) => {
+    const { url } = client.req;
+    const products = data.products.filter(prod => {
+      return prod.categoryId === parseInt(url.split('/')[2]);
+    });
+
+    cb(JSON.stringify({
+      products,
+      template: productCardTemplate,
+    }));
+  },
   '/specials': (client, cb) => {
     cb(JSON.stringify({
       template: specialBlockTemplate,
