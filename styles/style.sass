@@ -316,6 +316,37 @@ footer
 
 .bg-buy
   display: none
+  background: rgba(255,255,255,.8)
+  position: absolute
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  margin: auto
+  img
+    position: absolute
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    margin: auto
+    width: 76px
+    height: 119px
+    transform: scale(0)
+    transition: all .5s ease
+
+.delete-name
+  font-size: 22px
+  position: absolute
+  right: 0
+  top: 0
+  span
+    display: none
+
+.delete-name:hover
+  color: $orange
+  span
+    display: inline-block
 
 .table
   border-collapse: collapse
@@ -447,6 +478,7 @@ footer
   justify-content: space-around
   border-bottom: 2px dashed #ddd
   padding-bottom: 10px
+  transition-duration: 1s
   img
     max-width: 86px
 

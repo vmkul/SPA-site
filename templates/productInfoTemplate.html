@@ -2,9 +2,13 @@
   <div class="prod-info-img">
     <img src="{{ image }}" alt="fish">
 
-    <div class="bg-buy">
+    <div class="bg-buy" id="{{ url }}/bg">
+      <img src="images/onefish.png" alt="fish" id="{{ url }}/img">
       <div class="btn-delete-buy"></div>
-      <div class="delete-name">Remove from cart</div>
+      <div class="delete-name">
+        <i class="fa fa-times" aria-hidden="true"></i>
+        <span onclick="handleRemoveFromCart('{{ url }}')"> Remove from cart</span>
+      </div>
     </div>
   </div>
 

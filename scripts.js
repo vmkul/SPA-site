@@ -152,6 +152,16 @@ const handleRemoveProduct = productUrl => {
 };
 
 const handleAddToCart = async productUrl => {
+  const background = document.getElementById(`${productUrl}/bg`);
+  if (background) {
+    background.style.display = 'block';
+    setTimeout(() => {
+      document.getElementById(`${productUrl}/img`).style.transform = 'scale(1)';
+    }, 200);
+    document.getElementById(`${productUrl}/main`).onclick = () => {
+      console.log('click')
+    };
+  }
   const cart = prodCart.items;
   cart[productUrl] = document.getElementById(productUrl).value;
   prodCart.items = cart;
@@ -159,12 +169,20 @@ const handleAddToCart = async productUrl => {
 };
 
 const handleRemoveFromCart = async productUrl => {
+  const background = document.getElementById(`${productUrl}/bg`);
+  if (background) {
+    background.style.display = 'none';
+    document.getElementById(`${productUrl}/img`).style.transform = 'scale(0)';
+  }
   const cart = prodCart.items;
   delete cart[productUrl];
   prodCart.items = cart;
   await updateCartTotal();
   if (!Object.keys(cart).length) return updatePage();
-  document.getElementById(`cart/${productUrl}`).remove();
+  const cartElement = document.getElementById(`cart/${productUrl}`);
+  if (cart) {
+    cartElement.remove();
+  }
 };
 
 menuButton.onclick = () => {
