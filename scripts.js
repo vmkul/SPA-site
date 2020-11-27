@@ -5,6 +5,7 @@ const mobileMenu = document.getElementById('mobile-menu-layer');
 const pageContent = document.getElementById('page-content');
 const cartTotal = document.getElementById('cart-total');
 const orderForm = document.querySelector('form');
+const sliderContainer = document.getElementById('slider-container');
 const now = new Date();
 document.getElementById('delivery_date').valueAsDate = now;
 document.getElementById('delivery_time').value = now.toLocaleTimeString().substring(0, 5);
@@ -165,9 +166,6 @@ const handleAddToCart = async productUrl => {
     setTimeout(() => {
       document.getElementById(`${productUrl}/img`).style.transform = 'scale(1)';
     }, 200);
-    document.getElementById(`${productUrl}/main`).onclick = () => {
-      console.log('click')
-    };
   }
   const cart = prodCart.items;
   cart[productUrl] = document.getElementById(productUrl).value;
@@ -223,6 +221,7 @@ const listProducts = async (container, url, title) => {
 const prodCart = new Cart('cart');
 
 const router = new Router(async () => {
+  sliderContainer.style.display = 'block';
   await listProducts(pageContent, 'popular');
 });
 
@@ -306,6 +305,7 @@ window.addEventListener('popstate', async () => {
   const loader = new htmlElement('div', 'loader', '<img src="images/spinner.gif" alt="loader">');
   loader.insertInto(pageContent);
   const hash = document.location.hash;
+  if (hash.length) sliderContainer.style.display = 'none';
   window.scroll(0, 0);
   router.handle(hash);
 });
@@ -334,3 +334,57 @@ orderForm.onsubmit = async e => {
 };
 
 updatePage();
+
+let currentSlide = 0;
+const slides = [];
+
+for (const slide of document.getElementsByClassName('showSlide')) {
+  slides.push(slide);
+}
+
+const goLeft = () => {
+  let nextSlide;
+  if (currentSlide === 0) {
+    nextSlide = slides.length - 1;
+  } else {
+    nextSlide = currentSlide - 1;
+  }
+  slides[currentSlide].classList.add('fade');
+  setTimeout(() => {
+    slides[nextSlide].classList.remove('fade');
+  }, 100);
+  currentSlide = nextSlide;
+};
+
+const goRight = () => {
+  let nextSlide;
+  if (currentSlide === slides.length - 1) {
+    nextSlide = 0;
+  } else {
+    nextSlide = currentSlide + 1;
+  }
+  slides[currentSlide].classList.add('fade');
+  slides[currentSlide].classList.add('fade');
+  setTimeout(() => {
+    slides[nextSlide].classList.remove('fade');
+  }, 100);
+  currentSlide = nextSlide;
+};
+
+let slideTimer = setInterval(goRight, 3000);
+
+sliderContainer.onmouseenter = () => {
+  clearInterval(slideTimer);
+};
+
+sliderContainer.onmouseleave = () => {
+  slideTimer = setInterval(goRight, 3000);
+};
+
+sliderContainer.onclick = event => {
+  const target = event.target;
+  if (target.id === 'right' || target.id === 'left') {
+    return ;
+  }
+  window.location.hash = '#specials';
+}
