@@ -213,13 +213,5 @@
       "datePosted": "2020-10-12",
       "image": "images/free-napitok.jpg"
     }
-  ],
-  "sliderData": [{
-    "url": ""
-  }],
-  "infoPages": [{
-    "url": "about",
-    "name": "О нас",
-    "content": "Информация ..."
-  }]
+  ]
 }
