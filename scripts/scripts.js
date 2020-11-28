@@ -10,7 +10,7 @@ const now = new Date();
 document.getElementById('delivery_date').valueAsDate = now;
 document.getElementById('delivery_time').value = now.toLocaleTimeString().substring(0, 5);
 
-const serverAddress = 'http://localhost:5000';
+const serverAddress = `http://${window.location.host}`;
 
 const cartTemplate = '<div class="cart-container">\n' +
   '  <div class="cart-product" id="cart/{{ url }}">\n' +
@@ -302,7 +302,7 @@ window.addEventListener('popstate', async () => {
   updateCartTotal().then();
   emptyDiv(pageContent);
   if (router.preventDefault) return;
-  const loader = new htmlElement('div', 'loader', '<img src="images/spinner.gif" alt="loader">');
+  const loader = new htmlElement('div', 'loader', '<img src="../images/spinner.gif" alt="loader">');
   loader.insertInto(pageContent);
   const hash = document.location.hash;
   if (hash.length) sliderContainer.style.display = 'none';
@@ -313,7 +313,7 @@ window.addEventListener('popstate', async () => {
 orderForm.onsubmit = async e => {
   e.preventDefault();
   let formData = new FormData(orderForm);
-  formData.append('cart', prodCart.items);
+  formData.append('cart', JSON.stringify(prodCart.items));
   formData = Object.fromEntries(formData);
   prodCart.items = {};
 
