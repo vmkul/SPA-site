@@ -3,22 +3,13 @@
 const http = require('http');
 const url = require('url');
 const fs = require('fs');
-const qs = require('querystring');
 const data = require('./db.json');
-
-let productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
-let productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
-let specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
-let specialDetailsTemplate = fs.readFileSync('./templates/specialDetailsTemplate.html', 'utf8');
-let orderTemplate = fs.readFileSync('./templates/orderTemplate.html', 'utf8');
-
-fs.watch('./templates', () => {
-  productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
-  productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
-  specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
-  specialDetailsTemplate = fs.readFileSync('./templates/specialDetailsTemplate.html', 'utf8');
-  orderTemplate = fs.readFileSync('./templates/orderTemplate.html', 'utf8');
-});
+const sendOrderInfo = require('./bot');
+const productCardTemplate = fs.readFileSync('./templates/productCardTemplate.html', 'utf8');
+const productInfoTemplate = fs.readFileSync('./templates/productInfoTemplate.html', 'utf8');
+const specialBlockTemplate = fs.readFileSync('./templates/specialBlockTemplate.html', 'utf8');
+const specialDetailsTemplate = fs.readFileSync('./templates/specialDetailsTemplate.html', 'utf8');
+const orderTemplate = fs.readFileSync('./templates/orderTemplate.html', 'utf8');
 
 const genID = () => Math.random().toString(36).substr(2, 9);
 
@@ -43,6 +34,13 @@ const routes = {
     const product = data.products.find(prod => {
       return prod.url === url.split('/')[2];
     });
+
+    if (!product) {
+      return cb(JSON.stringify({
+        errorCode: 0,
+        msg: 'Product not found!',
+      }));
+    }
 
     product.relatedProductIds.forEach(id => {
       related.push(data.products[id]);
@@ -87,27 +85,62 @@ const routes = {
       return spec.url === url.split('/')[2];
     });
 
+    if (!special) {
+      return cb(JSON.stringify({
+        errorCode: 1,
+        msg: 'Special not found!',
+      }));
+    }
+
     cb(JSON.stringify({
       special,
       template: specialDetailsTemplate,
     }));
   },
-  '/index.html': loadFile,
-  '/contactus.html': loadFile,
   '/submitorder': (client, cb) => {
     const chunks = [];
     client.req.on('data', chunk => chunks.push(chunk));
     client.req.on('end', () => {
-      console.log(JSON.parse(chunks.join().toString()));
+      const id = genID();
+      const order = JSON.parse(chunks.join());
+      if (typeof order !== 'object') {
+        return cb(JSON.stringify({
+          errorCode: 2,
+          msg: 'Bad order info!',
+        }));
+      }
+
+      order.id = id;
+      let orderMessage = 'Got a new order: \n';
+
+      for (const [key, value] of Object.entries(order)) {
+        if (key === 'cart') {
+          orderMessage += 'CART:\n';
+          for (const [prod, count] of Object.entries(JSON.parse(order.cart))) {
+            orderMessage += `  ${prod}: ${count}\n`;
+          }
+        } else {
+          orderMessage += `${key}: ${value}\n`;
+        }
+      }
+
+      sendOrderInfo(orderMessage);
+
       cb(JSON.stringify({
-        id: genID(),
+        id,
         template: orderTemplate,
       }));
     });
   },
-  '/aboutus.html': loadFile,
+  '/': (client, cb) => {
+    fs.promises.readFile('index.html')
+      .then(data => cb(data))
+      .catch(() => cb('404 Not Found'));
+  },
   '/node_modules/*': loadFile,
-  '/css/*': loadFile,
+  '/styles/*': loadFile,
+  '/images/*': loadFile,
+  '/scripts/*': loadFile,
 };
 
 const RegExp = {};
@@ -129,8 +162,7 @@ const types = {
         client.res.statusCode = 404;
       else
         client.res.statusCode = 200;
-      client.res.setHeader('content-type', 'application/json');
-      client.res.setHeader('Access-Control-Allow-Origin', '*');
+      client.res.setHeader('Access-Control-Allow-Origin', '');
       setTimeout(() => {
         client.res.end(data, 'UTF-8');
       }, 0);
@@ -156,4 +188,4 @@ http.createServer((req, res) => {
   const type = typeof handler;
   const serializer = types[type];
   serializer({ req, res }, handler);
-}).listen(5000);
+}).listen(process.env.PORT);
