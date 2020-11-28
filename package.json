@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint . && prettier -c \"**/*.js\"",
     "test": "npm run -s lint",
-    "build": "sass styles/style.sass styles/sass.css"
+    "build": "sass styles/style.sass styles/sass.css",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "prettier": "^2.1.2"
   },
   "dependencies": {
-    "sass": "^1.29.0"
+    "sass": "^1.29.0",
+    "telegraf": "^3.38.0"
   }
 }
