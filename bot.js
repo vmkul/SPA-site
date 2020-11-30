@@ -1,7 +1,7 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const Telegram = require('telegraf/telegram')
+const Telegram = require('telegraf/telegram');
 const telegram = new Telegram(process.env.TOKEN);
 const bot = new Telegraf(process.env.TOKEN);
 
