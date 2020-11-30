@@ -158,14 +158,13 @@ const types = {
   'object': (client, obj) => client.res.end(JSON.stringify(obj)),
   'function': (client, handler) => {
     const cb = data => {
-      if (data === '404 Not Found')
+      if (data === '404 Not Found') {
         client.res.statusCode = 404;
-      else
+      } else {
         client.res.statusCode = 200;
-      client.res.setHeader('Access-Control-Allow-Origin', '');
-      setTimeout(() => {
-        client.res.end(data, 'UTF-8');
-      }, 0);
+      }
+      //client.res.setHeader('Access-Control-Allow-Origin', '*');
+      client.res.end(data, 'UTF-8');
     };
     handler(client, cb);
   }
