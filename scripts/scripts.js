@@ -225,6 +225,10 @@ const router = new Router(async () => {
   await listProducts(pageContent, 'popular');
 });
 
+router.addRoute('#catalog', async () => {
+  await listProducts(pageContent, 'products', 'POPULAR');
+});
+
 router.addRoute('#catalog/*', async () => {
   const categoryName = window.location.hash.split('/')[1];
   await listProducts(pageContent, `catalog/${categoryIDs[categoryName]}`,
@@ -302,7 +306,7 @@ window.addEventListener('popstate', async () => {
   updateCartTotal().then();
   emptyDiv(pageContent);
   if (router.preventDefault) return;
-  const loader = new htmlElement('div', 'loader', '<img src="../images/spinner.gif" alt="loader">');
+  const loader = new htmlElement('div', 'loader', '<img src="images/spinner.gif" alt="loader">');
   loader.insertInto(pageContent);
   const hash = document.location.hash;
   if (hash.length) sliderContainer.style.display = 'none';
