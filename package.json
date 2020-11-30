@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint . && prettier -c \"**/*.js\"",
-    "test": "npm run -s lint",
+    "test": "eslint .",
     "build": "sass styles/style.sass styles/sass.css",
     "start": "node index.js"
   },
