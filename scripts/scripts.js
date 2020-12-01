@@ -183,7 +183,9 @@ const handleRemoveFromCart = async productUrl => {
   delete cart[productUrl];
   prodCart.items = cart;
   await updateCartTotal();
-  if (!Object.keys(cart).length) return updatePage();
+  if (!Object.keys(cart).length && window.location.hash === '#cart') {
+    return updatePage();
+  }
   const cartElement = document.getElementById(`cart/${productUrl}`);
   if (cart) {
     cartElement.remove();
@@ -198,6 +200,12 @@ menuButton.onclick = () => {
   }
 };
 
+const openProduct = (e, url) => {
+  if (e.target.localName === 'img') {
+    window.location.hash = url;
+  }
+};
+
 const emptyDiv = element => {
   while (element.firstChild) {
     pageContent.removeChild(element.firstChild);
@@ -206,6 +214,11 @@ const emptyDiv = element => {
 
 const listProducts = async (container, url, title) => {
   const parsed = await apiRequest(url);
+
+  if ('errorCode' in parsed || parsed.products.length === 0) {
+    return router.handle('');
+  }
+
   emptyDiv(container);
   if (title) {
     container.innerHTML = `<h1 style="text-align: center; padding: 20px">${title}</h1>`;
@@ -237,6 +250,11 @@ router.addRoute('#catalog/*', async () => {
 
 router.addRoute('#product/*', async () => {
   const parsed = await apiRequest(document.location.hash.slice(1));
+
+  if ('errorCode' in parsed) {
+    return router.handle('');
+  }
+
   emptyDiv(pageContent);
   const product = new htmlElement('div', '', Mustache.render(parsed.productInfoTemplate, parsed.product));
   product.insertInto(pageContent);
@@ -251,6 +269,7 @@ router.addRoute('#product/*', async () => {
 
 router.addRoute('#specials', async () => {
   const parsed = await apiRequest(document.location.hash.slice(1));
+
   emptyDiv(pageContent);
   pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">SPECIALS</h1>';
 
@@ -266,7 +285,11 @@ router.addRoute('#specials', async () => {
 router.addRoute('#special/*', async () => {
   const hash = document.location.hash;
   const parsed = await apiRequest(`special${hash.substring(hash.indexOf('/'), hash.length)}`);
-  console.log(`special${hash.substring(hash.indexOf('/'), hash.length)}`);
+
+  if ('errorCode' in parsed) {
+    return router.handle('');
+  }
+
   emptyDiv(pageContent);
   pageContent.innerHTML = Mustache.render(parsed.template, parsed.special);
 });
