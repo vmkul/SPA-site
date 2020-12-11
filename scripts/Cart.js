@@ -70,7 +70,11 @@ const handleAddToCart = async productUrl => {
     }, 200);
   }
   const cart = prodCart.items;
-  cart[productUrl] = document.getElementById(productUrl).value;
+  if (document.getElementById(productUrl)) {
+    cart[productUrl] = document.getElementById(productUrl).value;
+  } else {
+    cart[productUrl] = document.getElementById('cart-count/' + productUrl).value;
+  }
   prodCart.items = cart;
   await updateCartTotal();
 };

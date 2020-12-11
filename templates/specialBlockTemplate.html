@@ -4,8 +4,8 @@
     <div class="date-m-y">{{ monthYear }}</div>
   </div>
 
-  <div onclick="window.location.hash = '#special/{{ url }}'" style="cursor: pointer">
-    <img src="{{ image }}" alt="special image">
+  <div style="cursor: pointer">
+    <img id="#special/{{ url }}" src="{{ image }}" alt="special image">
   </div>
   <div class="special-description">
     <h2><a href="#special/{{ url }}">{{ name }}</a></h2>

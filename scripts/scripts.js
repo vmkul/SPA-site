@@ -15,12 +15,35 @@ import { handleAddProduct, handleRemoveProduct,
 import cartTemplate from './cartTemplate.js';
 import { goLeft, goRight, sliderContainer } from './Slider.js';
 
-window.handleAddProduct = handleAddProduct;
-window.handleRemoveProduct = handleRemoveProduct;
-window.handleAddToCart = handleAddToCart;
-window.handleRemoveFromCart = handleRemoveFromCart;
-window.goLeft = goLeft;
-window.goRight = goRight;
+document.addEventListener('click', async event => {
+  const url = event.target.id.split('/')[1];
+
+  if (event.target.className === 'product-image') {
+    openProduct(event, event.target.id);
+  } else if (event.target.className === 'remove-from-cart') {
+    await handleRemoveFromCart(url);
+  } else if (event.target.className === 'cat-minus') {
+    handleRemoveProduct(url);
+  } else if (event.target.className === 'cat-plus') {
+    handleAddProduct(url);
+  } else if (event.target.className === 'btn-buy' && url) {
+   await handleAddToCart(url);
+  } else if (event.target.id.startsWith('#special')) {
+    window.location.hash = event.target.id;
+  } else if (event.target.className === 'minus') {
+    handleRemoveProduct('cart-count/' + url);
+    await handleAddToCart(url);
+  } else if (event.target.className === 'plus') {
+    handleAddProduct('cart-count/' + url);
+    await handleAddToCart(url);
+  } else if (event.target.className === 'price-cart') {
+    await handleRemoveFromCart(url);
+  } else if (event.target.id === 'left') {
+    goLeft();
+  } else if (event.target.id === 'right') {
+    goRight();
+  }
+});
 
 const serverAddress = `http://${window.location.host}`;
 

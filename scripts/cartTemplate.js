@@ -11,15 +11,18 @@ const cartTemplate = '<div class="cart-container">\n' +
   '      <div class="product-title"><a href="#product/{{ url }}">{{ productName }}</a></div>\n' +
   '\n' +
   '      <div class="block-prod-count">\n' +
-  '        <div class="minus" onclick="handleRemoveProduct(\'{{ url }}\'); handleAddToCart(\'{{ url }}\')">‒</div>\n' +
-  '        <input type="text" value="{{ count }}" id="{{ url }}" disabled class="prod-count-cart">\n' +
-  '        <div class="plus" onclick="handleAddProduct(\'{{ url }}\'); handleAddToCart(\'{{ url }}\')">+</div>\n' +
+  '        <div class="minus" id="cart-minus/{{ url }}">‒</div>\n' +
+  '        <input type="text" value="{{ count }}" id="cart-count/{{ url }}" disabled class="prod-count-cart">\n' +
+  '        <div class="plus" id="cart-plus/{{ url }}"">+</div>\n' +
   '      </div>\n' +
   '    </div>\n' +
   '\n' +
   '    <div style="display: flex; align-items: center">\n' +
-  '      <div onclick="handleRemoveFromCart(\'{{ url }}\')" class="price-cart"> <span id="{{ url }}/price">{{ price }}</span> <span>грн</span>\n' +
-  '        <i class="fa fa-times" aria-hidden="true"></i>\n' +
+  '      <div id="remove-cart/{{ url }}" class="price-cart"> ' +
+  '         <span style="pointer-events: none" id="{{ url }}/price">{{ price }}' +
+  '         </span> ' +
+  '       <span style="pointer-events: none">грн</span>\n' +
+  '        <i style="pointer-events: none" class="fa fa-times" aria-hidden="true"></i>\n' +
   '      </div>\n' +
   '    </div>\n' +
   '  </div>\n' +
