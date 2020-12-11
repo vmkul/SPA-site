@@ -3,39 +3,34 @@
 const menuButton = document.getElementById('menu-button');
 const mobileMenu = document.getElementById('mobile-menu-layer');
 const pageContent = document.getElementById('page-content');
-const cartTotal = document.getElementById('cart-total');
 const orderForm = document.querySelector('form');
-const sliderContainer = document.getElementById('slider-container');
 const now = new Date();
 document.getElementById('delivery_date').valueAsDate = now;
 document.getElementById('delivery_time').value = now.toLocaleTimeString().substring(0, 5);
 
+import htmlElement from './htmlElement.js';
+import Router from './Router.js';
+import { handleAddProduct, handleRemoveProduct,
+  handleAddToCart, updateCartTotal, handleRemoveFromCart, prodCart } from './Cart.js';
+import cartTemplate from './cartTemplate.js';
+import { goLeft, goRight, sliderContainer } from './Slider.js';
+
+window.handleAddProduct = handleAddProduct;
+window.handleRemoveProduct = handleRemoveProduct;
+window.handleAddToCart = handleAddToCart;
+window.handleRemoveFromCart = handleRemoveFromCart;
+window.goLeft = goLeft;
+window.goRight = goRight;
+
 const serverAddress = `http://${window.location.host}`;
 
-const cartTemplate = '<div class="cart-container">\n' +
-  '  <div class="cart-product" id="cart/{{ url }}">\n' +
-  '\n' +
-  '    <div style="display: flex; align-items: center">\n' +
-  '      <img src="{{ image }}" alt="prod image">\n' +
-  '    </div>\n' +
-  '\n' +
-  '    <div>\n' +
-  '      <div class="product-title"><a href="#product/{{ url }}">{{ productName }}</a></div>\n' +
-  '\n' +
-  '      <div class="block-prod-count">\n' +
-  '        <div class="minus" onclick="handleRemoveProduct(\'{{ url }}\'); handleAddToCart(\'{{ url }}\')">‒</div>\n' +
-  '        <input type="text" value="{{ count }}" id="{{ url }}" disabled class="prod-count-cart">\n' +
-  '        <div class="plus" onclick="handleAddProduct(\'{{ url }}\'); handleAddToCart(\'{{ url }}\')">+</div>\n' +
-  '      </div>\n' +
-  '    </div>\n' +
-  '\n' +
-  '    <div style="display: flex; align-items: center">\n' +
-  '      <div onclick="handleRemoveFromCart(\'{{ url }}\')" class="price-cart"> <span id="{{ url }}/price">{{ price }}</span> <span>грн</span>\n' +
-  '        <i class="fa fa-times" aria-hidden="true"></i>\n' +
-  '      </div>\n' +
-  '    </div>\n' +
-  '  </div>\n' +
-  '</div>';
+const openProduct = (e, url) => {
+  if (e.target.localName === 'img') {
+    window.location.hash = url;
+  }
+};
+
+window.openProduct = openProduct;
 
 const categoryIDs = {
   sets: 0,
@@ -44,78 +39,6 @@ const categoryIDs = {
   maki: 3,
 };
 
-class htmlElement {
-  constructor(type, className = '', innerHTML = '', id = '') {
-    this.element = document.createElement(type);
-    this.element.className = className;
-    this.element.innerHTML = innerHTML;
-    this.element.id = id;
-  }
-
-  insertInto(container) {
-    container.appendChild(this.element);
-  }
-
-  insertChild(child) {
-    this.element.appendChild(child.element);
-  }
-}
-
-class Router {
-  constructor(defaultHandler) {
-    this.routes = {};
-    this.RegEx = {};
-    this.defaultHandler = defaultHandler;
-    this.preventDefault = false;
-  }
-
-  toggleDefault() {
-    this.preventDefault = !this.preventDefault;
-  }
-
-  addRoute(route, handler) {
-    if (route[route.length - 1] === '*') {
-      this.RegEx[route.substring(0, route.length - 1)] = handler;
-    } else {
-      this.routes[route] = handler;
-    }
-  }
-
-  handle(route) {
-    for (const pattern in this.RegEx) {
-      if (route.startsWith(pattern)) {
-        this.RegEx[pattern]();
-        return;
-      }
-    }
-
-    const handler = this.routes[route];
-
-    if (handler) {
-      handler();
-    } else {
-      if (this.preventDefault) return;
-      this.defaultHandler();
-    }
-  }
-}
-
-class Cart {
-  constructor(id) {
-    this.storage = window.localStorage;
-    this.id = id;
-    if (!this.storage.getItem(id)) this.storage.setItem(id, '{}');
-  }
-
-  get items() {
-    return JSON.parse(this.storage.getItem(this.id));
-  }
-
-  set items(obj) {
-    this.storage.setItem(this.id, JSON.stringify(obj));
-  }
-}
-
 const updatePage = window.dispatchEvent.bind(null, new Event('popstate'));
 
 const apiRequest = async url => {
@@ -123,86 +46,11 @@ const apiRequest = async url => {
   return await response.json();
 }
 
-const updateCartTotal = async () => {
-  const cart = prodCart.items;
-
-  if (!cart) {
-    cartTotal.innerText = '0';
-    return;
-  }
-
-  let total = 0;
-
-  for (const [ prod_url, count ] of Object.entries(cart)) {
-    const url = `product/${prod_url}`;
-    const parsed = await apiRequest(url);
-    const price = parsed.product.price * count;
-    const prodPrice = document.getElementById(`${prod_url}/price`);
-    if (prodPrice) {
-      prodPrice.innerText = price.toString();
-    }
-    total += price;
-  }
-
-  cartTotal.innerText = total.toString();
-};
-
-const handleAddProduct = productUrl => {
-  const productCountInput = document.getElementById(productUrl);
-  productCountInput.value++;
-};
-
-const handleRemoveProduct = productUrl => {
-  const productCountInput = document.getElementById(productUrl);
-  if (productCountInput.value > 1) {
-    productCountInput.value--;
-  }
-};
-
-const handleAddToCart = async productUrl => {
-  const background = document.getElementById(`${productUrl}/bg`);
-  if (background) {
-    background.style.display = 'block';
-    setTimeout(() => {
-      document.getElementById(`${productUrl}/img`).style.transform = 'scale(1)';
-    }, 200);
-  }
-  const cart = prodCart.items;
-  cart[productUrl] = document.getElementById(productUrl).value;
-  prodCart.items = cart;
-  await updateCartTotal();
-};
-
-const handleRemoveFromCart = async productUrl => {
-  const background = document.getElementById(`${productUrl}/bg`);
-  if (background) {
-    background.style.display = 'none';
-    document.getElementById(`${productUrl}/img`).style.transform = 'scale(0)';
-  }
-  const cart = prodCart.items;
-  delete cart[productUrl];
-  prodCart.items = cart;
-  await updateCartTotal();
-  if (!Object.keys(cart).length && window.location.hash === '#cart') {
-    return updatePage();
-  }
-  const cartElement = document.getElementById(`cart/${productUrl}`);
-  if (cart) {
-    cartElement.remove();
-  }
-};
-
 menuButton.onclick = () => {
   if (mobileMenu.style.display === 'block') {
     mobileMenu.style.display = 'none';
   } else {
     mobileMenu.style.display = 'block';
-  }
-};
-
-const openProduct = (e, url) => {
-  if (e.target.localName === 'img') {
-    window.location.hash = url;
   }
 };
 
@@ -230,8 +78,6 @@ const listProducts = async (container, url, title) => {
     productContainer.insertChild(product);
   });
 };
-
-const prodCart = new Cart('cart');
 
 const router = new Router(async () => {
   sliderContainer.style.display = 'block';
@@ -361,57 +207,3 @@ orderForm.onsubmit = async e => {
 };
 
 updatePage();
-
-let currentSlide = 0;
-const slides = [];
-
-for (const slide of document.getElementsByClassName('showSlide')) {
-  slides.push(slide);
-}
-
-const goLeft = () => {
-  let nextSlide;
-  if (currentSlide === 0) {
-    nextSlide = slides.length - 1;
-  } else {
-    nextSlide = currentSlide - 1;
-  }
-  slides[currentSlide].classList.add('fade');
-  setTimeout(() => {
-    slides[nextSlide].classList.remove('fade');
-  }, 100);
-  currentSlide = nextSlide;
-};
-
-const goRight = () => {
-  let nextSlide;
-  if (currentSlide === slides.length - 1) {
-    nextSlide = 0;
-  } else {
-    nextSlide = currentSlide + 1;
-  }
-  slides[currentSlide].classList.add('fade');
-  slides[currentSlide].classList.add('fade');
-  setTimeout(() => {
-    slides[nextSlide].classList.remove('fade');
-  }, 100);
-  currentSlide = nextSlide;
-};
-
-let slideTimer = setInterval(goRight, 3000);
-
-sliderContainer.onmouseenter = () => {
-  clearInterval(slideTimer);
-};
-
-sliderContainer.onmouseleave = () => {
-  slideTimer = setInterval(goRight, 3000);
-};
-
-sliderContainer.onclick = event => {
-  const target = event.target;
-  if (target.id === 'right' || target.id === 'left') {
-    return ;
-  }
-  window.location.hash = '#specials';
-}
