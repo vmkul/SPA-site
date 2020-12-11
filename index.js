@@ -15,6 +15,14 @@ const genID = () => Math.random().toString(36).substr(2, 9);
 
 const loadFile = (client, cb) => {
   const { pathname } = url.parse('.' + client.req.url);
+  if (pathname.endsWith('js')) {
+    client.res.setHeader('Content-Type', 'text/javascript');
+  } else if (pathname.endsWith('css')) {
+    client.res.setHeader('Content-Type', 'text/css');
+  } else if (pathname.endsWith('html')) {
+    client.res.setHeader('Content-Type', 'text/html');
+  }
+
   fs.promises.readFile(pathname)
     .then(data => cb(data))
     .catch(() => cb('404 Not Found'));
