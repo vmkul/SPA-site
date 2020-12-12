@@ -58,7 +58,6 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         { from: 'images', to: 'images' },
-        { from: 'scripts/mustache.min.js', to: 'scripts/mustache.min.js' },
       ],
     }),
   ]
