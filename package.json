@@ -4,7 +4,7 @@
   "description": "Client dev 4th lab",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . && prettier -c scripts",
+    "lint": "eslint --fix scripts && prettier -c scripts",
     "test": "jest",
     "dev": "webpack serve",
     "build": "webpack",
@@ -47,6 +47,7 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/runtime": "^7.12.5",
     "@jest/globals": "^26.6.2",
+    "mustache": "^4.1.0",
     "telegraf": "^3.38.0"
   }
 }
