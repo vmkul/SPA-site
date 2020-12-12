@@ -1,5 +1,3 @@
-'use strict';
-
 class Router {
   constructor(defaultHandler) {
     this.routes = {};

@@ -1,13 +1,11 @@
-'use strict';
-
 const cartTotal = document.getElementById('cart-total');
 const serverAddress = `http://${window.location.host}`;
 const updatePage = window.dispatchEvent.bind(null, new Event('popstate'));
 
 const apiRequest = async url => {
   const response = await fetch(`${serverAddress}/${url}`);
-  return await response.json();
-}
+  return response.json();
+};
 
 class Cart {
   constructor(id) {
@@ -25,6 +23,8 @@ class Cart {
   }
 }
 
+const prodCart = new Cart('cart');
+
 const updateCartTotal = async () => {
   const cart = prodCart.items;
 
@@ -35,11 +35,11 @@ const updateCartTotal = async () => {
 
   let total = 0;
 
-  for (const [ prod_url, count ] of Object.entries(cart)) {
-    const url = `product/${prod_url}`;
+  for (const [prodUrl, count] of Object.entries(cart)) {
+    const url = `product/${prodUrl}`;
     const parsed = await apiRequest(url);
     const price = parsed.product.price * count;
-    const prodPrice = document.getElementById(`${prod_url}/price`);
+    const prodPrice = document.getElementById(`${prodUrl}/price`);
     if (prodPrice) {
       prodPrice.innerText = price.toString();
     }
@@ -73,7 +73,9 @@ const handleAddToCart = async productUrl => {
   if (document.getElementById(productUrl)) {
     cart[productUrl] = document.getElementById(productUrl).value;
   } else {
-    cart[productUrl] = document.getElementById('cart-count/' + productUrl).value;
+    cart[productUrl] = document.getElementById(
+      'cart-count/' + productUrl
+    ).value;
   }
   prodCart.items = cart;
   await updateCartTotal();
@@ -96,9 +98,14 @@ const handleRemoveFromCart = async productUrl => {
   if (cart) {
     cartElement.remove();
   }
+  return true;
 };
 
-const prodCart = new Cart('cart');
-
-export { handleRemoveFromCart, updateCartTotal,
-  handleAddToCart, handleRemoveProduct, handleAddProduct , prodCart };
+export {
+  handleRemoveFromCart,
+  updateCartTotal,
+  handleAddToCart,
+  handleRemoveProduct,
+  handleAddProduct,
+  prodCart,
+};

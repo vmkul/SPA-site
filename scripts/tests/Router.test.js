@@ -1,5 +1,3 @@
-'use strict';
-
 import Router from '../Router.js';
 import { describe, jest, test } from '@jest/globals';
 

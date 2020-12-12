@@ -1,6 +1,5 @@
-'use strict';
-
-const cartTemplate = '<div class="cart-container">\n' +
+const cartTemplate =
+  '<div class="cart-container">\n' +
   '  <div class="cart-product" id="cart/{{ url }}">\n' +
   '\n' +
   '    <div style="display: flex; align-items: center">\n' +

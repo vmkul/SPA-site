@@ -1,11 +1,9 @@
-'use strict';
-
-import htmlElement from '../htmlElement';
+import HTMLElement from '../HTMLElement';
 import { describe, jest, test } from '@jest/globals';
 
 describe('Tests for htmlElement', () => {
-  const element = new htmlElement('div', 'class', 'html', '1');
-  const second = new htmlElement('span');
+  const element = new HTMLElement('div', 'class', 'html', '1');
+  const second = new HTMLElement('span');
 
   const container = {
     appendChild: jest.fn(),

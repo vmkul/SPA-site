@@ -1,20 +1,79 @@
-'use strict';
-
 const menuButton = document.getElementById('menu-button');
 const mobileMenu = document.getElementById('mobile-menu-layer');
 const pageContent = document.getElementById('page-content');
 const orderForm = document.querySelector('form');
 const now = new Date();
 document.getElementById('delivery_date').valueAsDate = now;
-document.getElementById('delivery_time').value = now.toLocaleTimeString().substring(0, 5);
+document.getElementById(
+  'delivery_time'
+).value = now.toLocaleTimeString().substring(0, 5);
+const serverAddress = `http://${window.location.host}`;
 
 import '../styles/style.sass';
-import htmlElement from './htmlElement.js';
+import HTMLElement from './HTMLElement.js';
 import Router from './Router.js';
-import { handleAddProduct, handleRemoveProduct,
-  handleAddToCart, updateCartTotal, handleRemoveFromCart, prodCart } from './Cart.js';
+import {
+  handleAddProduct,
+  handleRemoveProduct,
+  handleAddToCart,
+  updateCartTotal,
+  handleRemoveFromCart,
+  prodCart,
+} from './Cart.js';
 import cartTemplate from './cartTemplate.js';
 import { goLeft, goRight, sliderContainer } from './Slider.js';
+import * as Mustache from '../node_modules/mustache/mustache.js';
+
+const apiRequest = async url => {
+  const response = await fetch(`${serverAddress}/${url}`);
+  return response.json();
+};
+
+const emptyDiv = element => {
+  while (element.firstChild) {
+    pageContent.removeChild(element.firstChild);
+  }
+};
+
+const listProducts = async (container, url, title) => {
+  const parsed = await apiRequest(url);
+
+  if ('errorCode' in parsed || parsed.products.length === 0) {
+    window.location.hash = '';
+    return;
+  }
+
+  emptyDiv(container);
+  if (title) {
+    container.innerHTML = `<h1 style="text-align: center; padding: 20px">${title}</h1>`;
+  }
+  const productContainer = new HTMLElement(
+    'div',
+    'product-container',
+    '',
+    'product-container'
+  );
+  productContainer.insertInto(container);
+  parsed.products.forEach(productInfo => {
+    const product = new HTMLElement(
+      'div',
+      'prod-block',
+      Mustache.render(parsed.template, productInfo)
+    );
+    productContainer.insertChild(product);
+  });
+};
+
+const router = new Router(async () => {
+  sliderContainer.style.display = 'block';
+  await listProducts(pageContent, 'popular');
+});
+
+const openProduct = (e, url) => {
+  if (e.target.localName === 'img') {
+    window.location.hash = url;
+  }
+};
 
 document.addEventListener('click', async event => {
   const url = event.target.id.split('/')[1];
@@ -28,7 +87,7 @@ document.addEventListener('click', async event => {
   } else if (event.target.className === 'cat-plus') {
     handleAddProduct(url);
   } else if (event.target.className === 'btn-buy' && url) {
-   await handleAddToCart(url);
+    await handleAddToCart(url);
   } else if (event.target.id.startsWith('#special')) {
     window.location.hash = event.target.id;
   } else if (event.target.className === 'minus') {
@@ -46,14 +105,6 @@ document.addEventListener('click', async event => {
   }
 });
 
-const serverAddress = `http://${window.location.host}`;
-
-const openProduct = (e, url) => {
-  if (e.target.localName === 'img') {
-    window.location.hash = url;
-  }
-};
-
 window.openProduct = openProduct;
 
 const categoryIDs = {
@@ -65,11 +116,6 @@ const categoryIDs = {
 
 const updatePage = window.dispatchEvent.bind(null, new Event('popstate'));
 
-const apiRequest = async url => {
-  const response = await fetch(`${serverAddress}/${url}`);
-  return await response.json();
-}
-
 menuButton.onclick = () => {
   if (mobileMenu.style.display === 'block') {
     mobileMenu.style.display = 'none';
@@ -78,44 +124,17 @@ menuButton.onclick = () => {
   }
 };
 
-const emptyDiv = element => {
-  while (element.firstChild) {
-    pageContent.removeChild(element.firstChild);
-  }
-};
-
-const listProducts = async (container, url, title) => {
-  const parsed = await apiRequest(url);
-
-  if ('errorCode' in parsed || parsed.products.length === 0) {
-    return router.handle('');
-  }
-
-  emptyDiv(container);
-  if (title) {
-    container.innerHTML = `<h1 style="text-align: center; padding: 20px">${title}</h1>`;
-  }
-  const productContainer = new htmlElement('div', 'product-container', '', 'product-container');
-  productContainer.insertInto(container);
-  parsed.products.forEach(productInfo => {
-    const product = new htmlElement('div', 'prod-block', Mustache.render(parsed.template, productInfo));
-    productContainer.insertChild(product);
-  });
-};
-
-const router = new Router(async () => {
-  sliderContainer.style.display = 'block';
-  await listProducts(pageContent, 'popular');
-});
-
 router.addRoute('#catalog', async () => {
   await listProducts(pageContent, 'products', 'POPULAR');
 });
 
 router.addRoute('#catalog/*', async () => {
   const categoryName = window.location.hash.split('/')[1];
-  await listProducts(pageContent, `catalog/${categoryIDs[categoryName]}`,
-    window.location.hash.split('/')[1].toLocaleUpperCase());
+  await listProducts(
+    pageContent,
+    `catalog/${categoryIDs[categoryName]}`,
+    window.location.hash.split('/')[1].toLocaleUpperCase()
+  );
 });
 
 router.addRoute('#product/*', async () => {
@@ -126,35 +145,52 @@ router.addRoute('#product/*', async () => {
   }
 
   emptyDiv(pageContent);
-  const product = new htmlElement('div', '', Mustache.render(parsed.productInfoTemplate, parsed.product));
+  const product = new HTMLElement(
+    'div',
+    '',
+    Mustache.render(parsed.productInfoTemplate, parsed.product)
+  );
   product.insertInto(pageContent);
-  const relatedContainer = new htmlElement('div', 'related-container');
+  const relatedContainer = new HTMLElement('div', 'related-container');
   relatedContainer.insertInto(pageContent);
 
   parsed.related.forEach(productInfo => {
-    const product = new htmlElement('div', 'prod-block', Mustache.render(parsed.productCardTemplate, productInfo));
+    const product = new HTMLElement(
+      'div',
+      'prod-block',
+      Mustache.render(parsed.productCardTemplate, productInfo)
+    );
     relatedContainer.insertChild(product);
   });
+
+  return true;
 });
 
 router.addRoute('#specials', async () => {
   const parsed = await apiRequest(document.location.hash.slice(1));
 
   emptyDiv(pageContent);
-  pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">SPECIALS</h1>';
+  pageContent.innerHTML =
+    '<h1 style="text-align: center; padding: 20px">SPECIALS</h1>';
 
   parsed.specials.forEach(spec => {
     const date = new Date(spec.datePosted);
     spec.day = date.getDate() - 1;
-    spec.monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`
-    const element = new htmlElement('div', '', Mustache.render(parsed.template, spec));
+    spec.monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
+    const element = new HTMLElement(
+      'div',
+      '',
+      Mustache.render(parsed.template, spec)
+    );
     element.insertInto(pageContent);
   });
 });
 
 router.addRoute('#special/*', async () => {
   const hash = document.location.hash;
-  const parsed = await apiRequest(`special${hash.substring(hash.indexOf('/'), hash.length)}`);
+  const parsed = await apiRequest(
+    `special${hash.substring(hash.indexOf('/'), hash.length)}`
+  );
 
   if ('errorCode' in parsed) {
     return router.handle('');
@@ -162,44 +198,57 @@ router.addRoute('#special/*', async () => {
 
   emptyDiv(pageContent);
   pageContent.innerHTML = Mustache.render(parsed.template, parsed.special);
+
+  return true;
 });
 
 router.addRoute('#cart', async () => {
   emptyDiv(pageContent);
   const cart = prodCart.items;
-  pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">Order</h1>';
+  pageContent.innerHTML =
+    '<h1 style="text-align: center; padding: 20px">Order</h1>';
 
   if (!cart || Object.entries(cart).length === 0) {
-    pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">Your cart is empty!</h1>';
+    pageContent.innerHTML =
+      '<h1 style="text-align: center; padding: 20px">Your cart is empty!</h1>';
     return;
   }
 
-  for (const [ prod_url, count ] of Object.entries(cart)) {
-    const parsed = await apiRequest(`product/${prod_url}`);
+  for (const [prodUrl, count] of Object.entries(cart)) {
+    const parsed = await apiRequest(`product/${prodUrl}`);
     parsed.product.count = count;
     parsed.product.price *= count;
-    const cartProduct = new htmlElement('div', '', Mustache.render(cartTemplate, parsed.product));
+    const cartProduct = new HTMLElement(
+      'div',
+      '',
+      Mustache.render(cartTemplate, parsed.product)
+    );
     cartProduct.insertInto(pageContent);
   }
 
-  const checkoutButton = new htmlElement('div', 'loader');
+  const checkoutButton = new HTMLElement('div', 'loader');
   checkoutButton.element.onclick = () => {
     emptyDiv(pageContent);
     router.toggleDefault();
     window.location.hash = '#order';
-    pageContent.innerHTML = '<h1 style="text-align: center; padding: 20px">Please fill in the form</h1>';
+    pageContent.innerHTML =
+      '<h1 style="text-align: center; padding: 20px">Please fill in the form</h1>';
     orderForm.style.display = 'block';
-  }
+  };
 
   checkoutButton.insertInto(pageContent);
-  checkoutButton.insertChild(new htmlElement('div', 'btn-cart', 'Checkout'));
+  checkoutButton.insertChild(new HTMLElement('div', 'btn-cart', 'Checkout'));
 });
 
 window.addEventListener('popstate', async () => {
   updateCartTotal().then();
   emptyDiv(pageContent);
   if (router.preventDefault) return;
-  const loader = new htmlElement('div', 'loader', '<img src="images/spinner.gif" alt="loader">');
+  const loader = new HTMLElement(
+    'div',
+    'loader',
+    '<img src="images/spinner.gif" alt="loader">'
+  );
   loader.insertInto(pageContent);
   const hash = document.location.hash;
   if (hash.length) sliderContainer.style.display = 'none';
@@ -223,7 +272,11 @@ orderForm.onsubmit = async e => {
   formData.id = result.id;
 
   document.location.hash = `#order/${result.id}`;
-  const orderInfo = new htmlElement('div', '', Mustache.render(result.template, formData));
+  const orderInfo = new HTMLElement(
+    'div',
+    '',
+    Mustache.render(result.template, formData)
+  );
 
   orderInfo.insertInto(pageContent);
   orderForm.style.display = 'none';

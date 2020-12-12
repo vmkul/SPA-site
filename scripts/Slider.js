@@ -1,5 +1,3 @@
-'use strict';
-
 let currentSlide = 0;
 const slides = [];
 const sliderContainer = document.getElementById('slider-container');
@@ -50,9 +48,9 @@ sliderContainer.onmouseleave = () => {
 sliderContainer.onclick = event => {
   const target = event.target;
   if (target.id === 'right' || target.id === 'left') {
-    return ;
+    return;
   }
   window.location.hash = '#specials';
-}
+};
 
 export { goRight, goLeft, sliderContainer };

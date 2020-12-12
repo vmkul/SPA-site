@@ -1,6 +1,4 @@
-'use strict';
-
-class htmlElement {
+class HTMLElement {
   constructor(type, className = '', innerHTML = '', id = '') {
     this.element = document.createElement(type);
     this.element.className = className;
@@ -17,4 +15,4 @@ class htmlElement {
   }
 }
 
-export default htmlElement;
+export default HTMLElement;
