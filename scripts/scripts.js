@@ -8,6 +8,7 @@ const now = new Date();
 document.getElementById('delivery_date').valueAsDate = now;
 document.getElementById('delivery_time').value = now.toLocaleTimeString().substring(0, 5);
 
+import '../styles/style.sass';
 import htmlElement from './htmlElement.js';
 import Router from './Router.js';
 import { handleAddProduct, handleRemoveProduct,
