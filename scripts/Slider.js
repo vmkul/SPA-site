@@ -53,4 +53,4 @@ sliderContainer.onclick = event => {
   window.location.hash = '#specials';
 };
 
-export { goRight, goLeft, sliderContainer };
+export { goRight, goLeft, sliderContainer, currentSlide };

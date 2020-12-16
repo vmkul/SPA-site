@@ -102,10 +102,12 @@ const handleRemoveFromCart = async productUrl => {
 };
 
 export {
+  Cart,
   handleRemoveFromCart,
   updateCartTotal,
   handleAddToCart,
   handleRemoveProduct,
   handleAddProduct,
   prodCart,
+  apiRequest,
 };
