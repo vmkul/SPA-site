@@ -20,6 +20,7 @@ import {
   handleRemoveFromCart,
   prodCart,
 } from './Cart.js';
+import listProducts from './listProducts';
 import cartTemplate from './cartTemplate.js';
 import { goLeft, goRight, sliderContainer } from './Slider.js';
 import * as Mustache from '../node_modules/mustache/mustache.js';
@@ -35,35 +36,6 @@ const emptyDiv = element => {
   }
 };
 
-const listProducts = async (container, url, title) => {
-  const parsed = await apiRequest(url);
-
-  if ('errorCode' in parsed || parsed.products.length === 0) {
-    window.location.hash = '';
-    return;
-  }
-
-  emptyDiv(container);
-  if (title) {
-    container.innerHTML = `<h1 style="text-align: center; padding: 20px">${title}</h1>`;
-  }
-  const productContainer = new HTMLElement(
-    'div',
-    'product-container',
-    '',
-    'product-container'
-  );
-  productContainer.insertInto(container);
-  parsed.products.forEach(productInfo => {
-    const product = new HTMLElement(
-      'div',
-      'prod-block',
-      Mustache.render(parsed.template, productInfo)
-    );
-    productContainer.insertChild(product);
-  });
-};
-
 const router = new Router(async () => {
   sliderContainer.style.display = 'block';
   await listProducts(pageContent, 'popular');
@@ -75,7 +47,7 @@ const openProduct = (e, url) => {
   }
 };
 
-document.addEventListener('click', async event => {
+const clickEventHandler = async event => {
   const url = event.target.id.split('/')[1];
 
   if (event.target.className === 'product-image') {
@@ -103,9 +75,9 @@ document.addEventListener('click', async event => {
   } else if (event.target.id === 'right') {
     goRight();
   }
-});
+};
 
-window.openProduct = openProduct;
+document.addEventListener('click', clickEventHandler);
 
 const categoryIDs = {
   sets: 0,
@@ -241,7 +213,7 @@ router.addRoute('#cart', async () => {
 });
 
 window.addEventListener('popstate', async () => {
-  updateCartTotal().then();
+  updateCartTotal();
   emptyDiv(pageContent);
   if (router.preventDefault) return;
   const loader = new HTMLElement(
@@ -253,7 +225,7 @@ window.addEventListener('popstate', async () => {
   const hash = document.location.hash;
   if (hash.length) sliderContainer.style.display = 'none';
   window.scroll(0, 0);
-  router.handle(hash);
+  await router.handle(hash);
 });
 
 orderForm.onsubmit = async e => {
@@ -284,3 +256,5 @@ orderForm.onsubmit = async e => {
 };
 
 updatePage();
+
+export { router, listProducts, HTMLElement, prodCart, clickEventHandler };
