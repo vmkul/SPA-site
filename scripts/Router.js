@@ -18,10 +18,10 @@ class Router {
     }
   }
 
-  handle(route) {
+  async handle(route) {
     for (const pattern in this.RegEx) {
       if (route.startsWith(pattern)) {
-        this.RegEx[pattern]();
+        await this.RegEx[pattern]();
         return;
       }
     }
@@ -29,10 +29,10 @@ class Router {
     const handler = this.routes[route];
 
     if (handler) {
-      handler();
+      await handler();
     } else {
       if (this.preventDefault) return;
-      this.defaultHandler();
+      await this.defaultHandler();
     }
   }
 }
