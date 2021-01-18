@@ -1,15 +1,15 @@
-<div class="prod-card-img"  id="{{ url }}/main" onclick="openProduct(event, '#product/{{ url }}')">
+<div class="prod-card-img"  id="{{ url }}/main">
   <div class="btn-favorite " data-auth="0">
     <i class="fa  fa-heart-o " aria-hidden="true"></i>
   </div>
-  <img src="{{ image }}" alt="fish">
+  <img class="product-image" id="#product/{{ url }}" src="{{ image }}" alt="fish">
 
   <div class="bg-buy" id="{{ url }}/bg">
     <img src="images/onefish.png" alt="fish" id="{{ url }}/img">
     <div class="btn-delete-buy"></div>
     <div class="delete-name">
       <i class="fa fa-times" aria-hidden="true"></i>
-      <span onclick="handleRemoveFromCart('{{ url }}')"> Remove from cart</span>
+      <span class="remove-from-cart" id="remove/{{ url }}"> Remove from cart</span>
     </div>
   </div>
 </div>
@@ -56,13 +56,13 @@
     </div>
     <div class="category-count">
       <div class="count-inner">
-        <span class="cat-minus" onclick="handleRemoveProduct('{{ url }}')">‒</span>
+        <span class="cat-minus" id="minus/{{ url }}">‒</span>
         <input type="text" class="prod-count" value="1" disabled id="{{ url }}">
-        <span class="cat-plus" onclick="handleAddProduct('{{ url }}')">+</span>
+        <span class="cat-plus" id="plus/{{ url }}">+</span>
       </div>
     </div>
   </div>
 </div>
-<div class="btn-buy" onclick="handleAddToCart('{{ url }}')">
+<div class="btn-buy" id="buy/{{ url }}">
   To order
 </div>

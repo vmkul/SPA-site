@@ -1,6 +1,12 @@
 extends:
   - metarhia
   - plugin:prettier/recommended
+parserOptions:
+  sourceType: module
 globals:
   Atomics: true
   SharedArrayBuffer: true
+env:
+  browser: true
+  node: true
+  jest: true
